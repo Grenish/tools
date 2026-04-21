@@ -5,6 +5,7 @@ const withMDX = createMDX();
 
 const config: NextConfig = {
   output: "export",
+  images: { unoptimized: true },
   reactStrictMode: true,
   turbopack: {
     root: path.dirname(__dirname),
