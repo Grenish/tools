@@ -1,0 +1,350 @@
+---
+title: Instagram Card
+description: A versatile, responsive Instagram-style card component for showcasing user profiles with customizable photo galleries and multiple layout options.
+---
+
+A responsive Instagram-style card component that displays user profiles with configurable photo layouts, avatar support, and multiple size variants.
+
+<Preview>
+  <InstagramCard
+    profileName="Sarah Anderson"
+    avatarSrc= "https://github.com/shadcn.png"
+    description="Travel photographer and content creator"
+    photos={[
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200",
+      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200",
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200",
+    ]}
+  />
+</Preview>
+
+## Installation
+
+```bash
+npx shadcn@latest add card avatar button aspect-ratio item
+```
+
+## Usage
+
+```tsx
+import InstagramCard from "@/components/tools/instagram-card";
+
+export default function Demo() {
+  return (
+    <InstagramCard
+      profileName="Sarah Anderson"
+      description="Travel photographer and content creator"
+      avatarSrc="https://github.com/shadcn.png"
+      photos={[
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200",
+        "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200",
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200",
+      ]}
+    />
+  );
+}
+```
+
+## Features
+
+- Responsive Design: Adapts seamlessly across all screen sizes
+- Multiple Size Variants: Small, medium, large, and extra-large options
+- Flexible Layouts: 1, 2, 3, or 4 photo grid arrangements
+- Custom Images: Support for custom profile avatars and gallery photos
+- Accessible: Built with semantic HTML and ARIA labels
+- Type-Safe: Fully typed with TypeScript interfaces
+- Modular Components: Organized subcomponents for maintainability
+
+## Props
+
+| Prop          | Type                           | Default | Description                                                |
+| ------------- | ------------------------------ | ------- | ---------------------------------------------------------- |
+| `profileName` | `string`                       | `""`    | The name displayed in the card header                      |
+| `description` | `string`                       | —       | Bio or description text below the profile name             |
+| `avatarSrc`   | `string`                       | —       | URL of the profile avatar image                            |
+| `photoLayout` | `1 \| 2 \| 3 \| 4`             | `4`     | Number and arrangement of photos in the gallery            |
+| `photos`      | `string[]`                     | `[]`    | Array of photo URLs to display (excess photos are ignored) |
+| `size`        | `"sm" \| "md" \| "lg" \| "xl"` | `"md"`  | Size variant of the card                                   |
+| `className`   | `string`                       | —       | Additional CSS classes to apply to the card                |
+
+## Size Variants
+
+### Small
+
+<Preview>
+  <InstagramCard
+    size="sm"
+    profileName="Sarah Anderson"
+    description="Travel photographer"
+    photos={[
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200",
+      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200",
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200",
+    ]}
+  />
+</Preview>
+
+```tsx
+<InstagramCard
+  size="sm"
+  profileName="Sarah Anderson"
+  description="Travel photographer"
+  photos={[
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200",
+    "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200",
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200",
+    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200",
+  ]}
+/>
+```
+
+### Medium (Default)
+
+<Preview>
+  <InstagramCard
+    size="md"
+    profileName="Sarah Anderson"
+    description="Travel photographer and content creator"
+    photos={[
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200",
+      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200",
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200",
+    ]}
+  />
+</Preview>
+
+```tsx
+<InstagramCard
+  size="md"
+  profileName="Sarah Anderson"
+  description="Travel photographer and content creator"
+  photos={[
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200",
+    "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200",
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200",
+    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200",
+  ]}
+/>
+```
+
+### Large
+
+<Preview>
+  <InstagramCard
+    size="lg"
+    profileName="Sarah Anderson"
+    description="Travel photographer and content creator"
+    photos={[
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200",
+      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200",
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200",
+    ]}
+  />
+</Preview>
+
+```tsx
+<InstagramCard
+  size="lg"
+  profileName="Sarah Anderson"
+  description="Travel photographer and content creator"
+  photos={[
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200",
+    "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200",
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200",
+    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200",
+  ]}
+/>
+```
+
+### Extra Large
+
+<Preview>
+  <InstagramCard
+    size="xl"
+    profileName="Sarah Anderson"
+    description="Travel photographer and content creator"
+    photos={[
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200",
+      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200",
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200",
+    ]}
+  />
+</Preview>
+
+```tsx
+<InstagramCard
+  size="xl"
+  profileName="Sarah Anderson"
+  description="Travel photographer and content creator"
+  photos={[
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200",
+    "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200",
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200",
+    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200",
+  ]}
+/>
+```
+
+## Photo Layouts
+
+The component supports four distinct photo layout arrangements, automatically adjusting spacing and dimensions.
+
+### Layout 1 — Single Photo
+
+Single full-width photo display.
+
+<Preview>
+  <InstagramCard
+    photoLayout={1}
+    profileName="Solo Artist"
+    description="Showcase single masterpiece"
+    photos={[
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200",
+    ]}
+  />
+</Preview>
+
+```tsx
+<InstagramCard photoLayout={1} />
+```
+
+### Layout 2 — Two Photos
+
+Side-by-side photo arrangement.
+
+<Preview>
+  <InstagramCard
+    photoLayout={2}
+    profileName="Dual Focus"
+    description="Compare two moments"
+    photos={[
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200",
+      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200",
+    ]}
+  />
+</Preview>
+
+```tsx
+<InstagramCard photoLayout={2} />
+```
+
+### Layout 3 — Three Photos
+
+Mixed grid with one larger photo on the left spanning two rows.
+
+<Preview>
+  <InstagramCard
+    photoLayout={3}
+    profileName="Mixed Gallery"
+    description="Feature plus secondary photos"
+    photos={[
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200",
+      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200",
+    ]}
+  />
+</Preview>
+
+```tsx
+<InstagramCard photoLayout={3} />
+```
+
+### Layout 4 — Four Photos (Default)
+
+2×2 grid layout showcasing four photos equally.
+
+<Preview>
+  <InstagramCard
+    photoLayout={4}
+    profileName="Full Gallery"
+    description="Complete photo showcase"
+  />
+</Preview>
+
+```tsx
+<InstagramCard photoLayout={4} />
+```
+
+## Examples
+
+### Custom Profile Information
+
+<Preview>
+  <InstagramCard
+    profileName="Elena Rodriguez"
+    description="Product designer & creative director"
+    avatarSrc="https://github.com/shadcn.png"
+    size="md"
+    photoLayout={4}
+  />
+</Preview>
+
+```tsx
+<InstagramCard
+  profileName="Elena Rodriguez"
+  description="Product designer & creative director"
+  avatarSrc="https://github.com/shadcn.png"
+/>
+```
+
+### Custom Photo Gallery
+
+<Preview>
+  <InstagramCard
+    profileName="Travel Chronicles"
+    description="Exploring the world one frame at a time"
+    photoLayout={4}
+    photos={[
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200&auto=format&fit=crop",
+    ]}
+  />
+</Preview>
+
+```tsx
+<InstagramCard
+  profileName="Travel Chronicles"
+  description="Exploring the world one frame at a time"
+  photoLayout={4}
+  photos={[
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200",
+    "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200",
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200",
+    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200",
+  ]}
+/>
+```
+
+### Large Size with Mixed Layout
+
+<Preview>
+  <InstagramCard
+    size="lg"
+    photoLayout={3}
+    photos={[
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200",
+      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200",
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200",
+    ]}
+    profileName="Creative Studio"
+    description="Design, photography, and visual storytelling"
+  />
+</Preview>
+
+```tsx
+<InstagramCard
+  size="lg"
+  photoLayout={3}
+  profileName="Creative Studio"
+  description="Design, photography, and visual storytelling"
+/>
+```

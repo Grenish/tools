@@ -1,0 +1,287 @@
+---
+title: Tweet Card
+description: A versatile Twitter/X-style card component for displaying tweets with profile information, media galleries, and engagement metrics.
+---
+
+A beautifully designed card component inspired by Twitter/X's tweet layout. Display user profiles, tweet content, media galleries, and engagement statistics in a customizable, responsive format.
+
+<Preview>
+  <TweetCard profileName="Sarah Chen" tweet="Just shipped an amazing new feature! 🚀" />
+</Preview>
+
+## Installation
+
+```bash
+npx shadcn@latest add card avatar button aspect-ratio item
+```
+
+## Usage
+
+```tsx
+import TweetCard from "@/components/tools/tweet-card"
+
+export default function Demo() {
+  return (
+    <TweetCard 
+      profileName="Sarah Chen"
+      bio="Product Designer"
+      tweet="Just shipped an amazing new feature! 🚀"
+      likes={1200}
+      retweets={340}
+      replies={85}
+    />
+  )
+}
+```
+
+## Features
+
+- 4 Size Variants: `sm`, `md`, `lg`, `xl` with proportional scaling
+- Rich Content: Support for text, media galleries, and engagement metrics
+- Flexible Media: 1, 2, 3, or 4 image layouts with responsive grids
+- Smart Formatting: Automatic number formatting for engagement metrics (K, M notation)
+- Timestamps: Optional tweet timestamp display
+- User Profile: Avatar, name, and bio with fallback initials
+- Responsive Design: Adapts seamlessly to all screen sizes
+- Accessible: Semantic HTML with proper ARIA labels
+- Type-Safe: Fully typed with TypeScript interfaces
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `profileName` | `string` | — | **Required.** Display name of the profile |
+| `tweet` | `string` | — | Tweet or status text content |
+| `avatarSrc` | `string` | GitHub shadcn avatar | URL of the profile avatar image |
+| `bio` | `string` | — | Short bio or handle text below the profile name |
+| `timestamp` | `string` | — | Tweet timestamp or date (e.g., "Nov 15, 2024") |
+| `media` | `string[]` | `[]` | Array of image URLs (max 4 shown) |
+| `likes` | `number` | — | Number of likes (formatted automatically) |
+| `retweets` | `number` | — | Number of retweets (formatted automatically) |
+| `replies` | `number` | — | Number of replies (formatted automatically) |
+| `size` | `"sm" \| "md" \| "lg" \| "xl"` | `"md"` | Card size variant |
+| `className` | `string` | — | Additional CSS classes for the card |
+
+## Size Variants
+
+Each size maintains perfect proportions with scaled typography, spacing, and imagery.
+
+### Small
+
+Compact variant suitable for sidebars, lists, and narrow spaces.
+
+<Preview>
+  <TweetCard 
+    size="sm"
+    profileName="Alex Kim"
+    tweet="Great day for coding!"
+  />
+</Preview>
+
+```tsx
+<TweetCard 
+  size="sm"
+  profileName="Alex Kim"
+  tweet="Great day for coding!"
+/>
+```
+
+### Medium (Default)
+
+Balanced size for general use and content areas.
+
+<Preview>
+  <TweetCard 
+    size="md"
+    profileName="Sarah Chen"
+    tweet="Just shipped an amazing new feature! 🚀"
+    likes={1200}
+  />
+</Preview>
+
+```tsx
+<TweetCard 
+  size="md"
+  profileName="Sarah Chen"
+  tweet="Just shipped an amazing new feature! 🚀"
+  likes={1200}
+/>
+```
+
+### Large
+
+Prominent display variant for featured content and spotlights.
+
+<Preview>
+  <TweetCard 
+    size="lg"
+    profileName="Jordan Lee"
+    bio="Creator & Developer"
+    tweet="Building in public is the best way to learn and grow."
+    timestamp="Nov 15, 2024"
+    likes={3500}
+    retweets={890}
+    replies={245}
+  />
+</Preview>
+
+```tsx
+<TweetCard 
+  size="lg"
+  profileName="Jordan Lee"
+  bio="Creator & Developer"
+  tweet="Building in public is the best way to learn and grow."
+  timestamp="Nov 15, 2024"
+  likes={3500}
+  retweets={890}
+  replies={245}
+/>
+```
+
+## Media Layouts
+
+The component automatically arranges media based on the number of images provided. Excess images beyond the supported count are ignored.
+
+### Single Image
+
+Display one featured image with 16:9 aspect ratio.
+
+<Preview>
+  <TweetCard 
+    profileName="Emma Wilson"
+    tweet="Beautiful sunset at the beach 🌅"
+    media={[
+      "https://images.unsplash.com/photo-1495567720989-cebdbdd97913?q=80&w=1200&auto=format&fit=crop"
+    ]}
+    likes={2100}
+  />
+</Preview>
+
+```tsx
+<TweetCard 
+  profileName="Emma Wilson"
+  tweet="Beautiful sunset at the beach 🌅"
+  media={[
+    "https://images.unsplash.com/photo-1495567720989-cebdbdd97913?q=80&w=1200&auto=format&fit=crop"
+  ]}
+/>
+```
+
+### Two Images
+
+Side-by-side image arrangement with equal columns.
+
+<Preview>
+  <TweetCard 
+    profileName="Chris Park"
+    tweet="Before and after comparison shots"
+    media={[
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop"
+    ]}
+    likes={890}
+    retweets={234}
+  />
+</Preview>
+
+```tsx
+<TweetCard 
+  profileName="Chris Park"
+  tweet="Before and after comparison shots"
+  media={[
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop"
+  ]}
+/>
+```
+
+## Examples
+
+### Full-Featured Tweet
+
+All available props combined for maximum detail.
+
+<Preview>
+  <TweetCard 
+    profileName="Elena Rodriguez"
+    bio="Product Designer at TechCorp"
+    avatarSrc="https://github.com/shadcn.png"
+    tweet="Excited to share our latest design system update! We've improved accessibility across all components. 🎨✨"
+    timestamp="Nov 15, 2024"
+    media={[
+      "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop"
+    ]}
+    likes={4500}
+    retweets={1200}
+    replies={380}
+    size="lg"
+  />
+</Preview>
+
+```tsx
+<TweetCard 
+  profileName="Elena Rodriguez"
+  bio="Product Designer at TechCorp"
+  avatarSrc="https://github.com/shadcn.png"
+  tweet="Excited to share our latest design system update! We've improved accessibility across all components. 🎨✨"
+  timestamp="Nov 15, 2024"
+  media={[
+    "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop"
+  ]}
+  likes={4500}
+  retweets={1200}
+  replies={380}
+  size="lg"
+/>
+```
+
+### Minimal Tweet
+
+Bare-bones usage with just a profile and tweet text.
+
+<Preview>
+  <TweetCard 
+    size="sm"
+    profileName="Quick Tweet"
+    tweet="Simple and clean"
+  />
+</Preview>
+
+```tsx
+<TweetCard 
+  size="sm"
+  profileName="Quick Tweet"
+  tweet="Simple and clean"
+/>
+```
+
+### Tweet with Timestamp
+
+Display tweet date and time information for context.
+
+<Preview>
+  <TweetCard 
+    profileName="News Reporter"
+    bio="Journalist"
+    tweet="Breaking: New industry report just released"
+    timestamp="Nov 15, 2024 • 2:30 PM"
+    likes={5600}
+    retweets={1400}
+    replies={290}
+    size="md"
+  />
+</Preview>
+
+```tsx
+<TweetCard 
+  profileName="News Reporter"
+  bio="Journalist"
+  tweet="Breaking: New industry report just released"
+  timestamp="Nov 15, 2024 • 2:30 PM"
+  likes={5600}
+  retweets={1400}
+  replies={290}
+/>
+```

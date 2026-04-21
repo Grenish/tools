@@ -1,0 +1,76 @@
+---
+title: Editor
+description: A feature-rich WYSIWYG text editor component with formatting tools, undo/redo support, font selection, and live preview mode.
+---
+
+A professional, fully-featured rich text editor built with React. Includes comprehensive formatting capabilities, keyboard shortcuts, font selection, real-time preview mode, and intuitive toolbar controls.
+
+<Preview>
+  <MainEditor />
+</Preview>
+
+## Installation
+
+```bash
+npx shadcn@latest add card button select toggle-group tooltip input-group dialog
+```
+
+## Usage
+
+```tsx
+import MainEditor from "@/components/tools/editor"
+
+export default function EditorDemo() {
+  return <MainEditor />
+}
+```
+
+## Features
+
+- Rich Text Formatting: Bold, italic, underline, headings (H1, H2), bullet lists, numbered lists
+- Font Selection: 10+ font families including Roboto, Montserrat, Lato, Pacifico, and more
+- Undo/Redo Support: Full history management with keyboard shortcuts (Ctrl+Z / Ctrl+Y)
+- Keyboard Shortcuts: Native support for Ctrl+B (bold), Ctrl+I (italic), Ctrl+U (underline)
+- Link Management: Insert and manage hyperlinks with URL validation dialog
+- Image Support: Embed images via URL with responsive scaling
+- Live Preview Mode: Toggle between edit and read-only preview
+- Intelligent Formatting: Real-time format detection and toolbar state synchronization
+- History Management: Debounced history tracking with max 50 states
+- Placeholder Text: Smart empty-state with contextual placeholder message
+- Responsive Design: Adapts to all screen sizes with flexible toolbar
+- Accessible: Semantic HTML with proper ARIA roles and keyboard navigation
+- Type-Safe: Fully typed with TypeScript interfaces
+
+## Examples
+
+### Basic Editor Setup
+
+Simple, fully-featured editor with no customization.
+
+<Preview>
+  <MainEditor />
+</Preview>
+
+```tsx
+import MainEditor from "@/components/tools/editor"
+
+export default function BasicEditor() {
+  return <MainEditor />
+}
+```
+
+### Using the Formatting Toolbar
+
+All formatting tools are available in the toolbar.
+
+<Preview>
+  <MainEditor />
+</Preview>
+
+### Preview Mode
+
+Review content before saving with the read-only preview mode.
+
+<Preview>
+  <MainEditor />
+</Preview>

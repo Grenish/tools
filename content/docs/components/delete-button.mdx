@@ -1,0 +1,82 @@
+---
+title: Delete Button
+description: A confirmation-enabled delete button component with customizable dialog content. Safely handles destructive actions with user confirmation.
+---
+
+A versatile delete button component that provides a safe, user-friendly way to handle destructive actions. It combines a prominent delete trigger button with a confirmation dialog, allowing full customization of the confirmation message, button labels, and visual presentation.
+
+<Preview>
+  <DeleteButton />
+</Preview>
+
+## Installation
+
+```bash
+npx shadcn@latest add alert-dialog button
+```
+
+## Usage
+
+```tsx
+import DeleteButton from "@/components/tools/delete-button"
+
+<DeleteButton />
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `iconOnly` | `boolean` | `false` | When `true`, displays only the trash icon; when `false`, displays icon with text |
+| `size` | `"default" \| "sm" \| "lg" \| "icon"` | Defaults to `"icon"` if `iconOnly` is true, otherwise `"default"` | Size variant of the button |
+| `title` | `React.ReactNode` | `"Are you sure?"` | Title text displayed in the confirmation dialog |
+| `description` | `React.ReactNode` | Default deletion warning | Descriptive message shown in the confirmation dialog |
+| `deleteText` | `React.ReactNode` | `"Delete"` | Label text for the delete confirmation button |
+| `cancelText` | `React.ReactNode` | `"Cancel"` | Label text for the cancel button |
+
+## Features
+
+- Customizable Dialogs: Full control over confirmation dialog titles, descriptions, and button labels
+- Flexible Display Modes: Choose between icon-only or icon-with-text presentations
+- Multiple Size Variants: Supports all standard button sizes for different UI contexts
+- Built-in Safety: Requires explicit user confirmation before any action
+- Semantic HTML: Implements proper alert dialog patterns for accessibility
+- Type-Safe Props: Fully typed props for seamless TypeScript integration
+
+## Examples
+
+### Default Configuration
+
+<Preview>
+  <DeleteButton />
+</Preview>
+
+```tsx
+<DeleteButton />
+```
+
+### Icon Only
+
+<Preview>
+  <DeleteButton iconOnly={true} />
+</Preview>
+
+```tsx
+<DeleteButton iconOnly={true} />
+```
+
+### Custom Title and Description
+
+<Preview>
+  <DeleteButton 
+    title="Delete Account?"
+    description="This will permanently delete your account and all associated data. This action cannot be undone."
+  />
+</Preview>
+
+```tsx
+<DeleteButton 
+  title="Delete Account?"
+  description="This will permanently delete your account and all associated data. This action cannot be undone."
+/>
+```

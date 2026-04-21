@@ -1,0 +1,237 @@
+---
+title: Google Button
+description: A styled authentication button for Google sign-in with icon and full variants, customizable tooltip, and seamless integration with shadcn Button.
+---
+
+A specialized authentication button for Google OAuth sign-in. Combines the Google logo with flexible sizing, intelligent tooltip display for icon mode, and customizable text. Perfect for authentication flows and social login implementations.
+
+<Preview>
+  <GoogleButton />
+</Preview>
+
+## Installation
+
+```bash
+npx shadcn@latest add button tooltip
+```
+
+## Usage
+
+```tsx
+import { GoogleButton } from "@/components/tools/google-button"
+
+export default function LoginDemo() {
+  return <GoogleButton onClick={() => handleGoogleAuth()} />
+}
+```
+
+## Features
+
+- Icon and Full Variants: Display as compact icon button or full-width button with text
+- Google Logo: Duotone Google logo from Phosphor Icons for modern appearance
+- Smart Tooltips: Automatic tooltip display in icon mode for accessibility
+- Customizable Text: Override default "Continue with Google" text with children
+- Custom Tooltips: Configurable tooltip text via `tooltipText` prop
+- Button Inheritance: Extends shadcn Button with all variants and sizes
+- Ref Forwarding: Direct DOM element access via React.forwardRef
+- Type Safety: Fully typed with TypeScript interface extending Button props
+- Authentication Ready: Default `type="button"` prevents accidental form submissions
+- Accessible: Semantic HTML with proper ARIA labels for screen readers
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `"default" \| "secondary" \| "destructive" \| "outline" \| "ghost" \| "link"` | `"outline"` | Button style variant |
+| `size` | `"sm" \| "default" \| "lg" \| "icon-xs" \| "icon-sm" \| "icon" \| "icon-lg"` | `"default"` | Button size (tooltip only shows for icon sizes) |
+| `tooltipText` | `string` | `"Google"` | Tooltip text displayed in icon mode |
+| `children` | `React.ReactNode` | `"Continue with Google"` | Custom button text for non-icon sizes |
+| `className` | `string` | — | Additional CSS classes |
+| `type` | `"button" \| "submit" \| "reset"` | `"button"` | HTML button type |
+| `disabled` | `boolean` | — | Disable the button |
+| `onClick` | `(e: MouseEvent) => void` | — | Click handler for authentication |
+| `...props` | Button props | — | All other shadcn Button props accepted |
+
+## Size Variants
+
+### Default (Default)
+
+Medium button with Google logo and text—ideal for standard forms and login pages.
+
+<Preview>
+  <GoogleButton />
+</Preview>
+
+```tsx
+<GoogleButton />
+```
+
+### Small
+
+Small button with Google logo and text.
+
+<Preview>
+  <GoogleButton size="sm" />
+</Preview>
+
+```tsx
+<GoogleButton size="sm" />
+```
+
+### Large
+
+Large button with prominent Google logo and text for hero sections and CTAs.
+
+<Preview>
+  <GoogleButton size="lg" />
+</Preview>
+
+```tsx
+<GoogleButton size="lg" />
+```
+
+### Icon Sizes
+
+#### Icon
+
+Compact button showing only the Google logo with tooltip on hover.
+
+<Preview>
+  <GoogleButton size="icon" />
+</Preview>
+
+```tsx
+<GoogleButton size="icon" />
+```
+
+#### Icon Small
+
+<Preview>
+  <GoogleButton size="icon-sm" />
+</Preview>
+
+```tsx
+<GoogleButton size="icon-sm" />
+```
+
+#### Icon Extra Small
+
+<Preview>
+  <GoogleButton size="icon-xs" />
+</Preview>
+
+```tsx
+<GoogleButton size="icon-xs" />
+```
+
+#### Icon Large
+
+<Preview>
+  <GoogleButton size="icon-lg" />
+</Preview>
+
+```tsx
+<GoogleButton size="icon-lg" />
+```
+
+## Style Variants
+
+### Outline (Default)
+
+Classic outlined button style for secondary actions.
+
+<Preview>
+  <GoogleButton variant="outline" />
+</Preview>
+
+```tsx
+<GoogleButton variant="outline" />
+```
+
+### Default
+
+Solid button with default theme colors.
+
+<Preview>
+  <GoogleButton variant="default" />
+</Preview>
+
+```tsx
+<GoogleButton variant="default" />
+```
+
+### Ghost
+
+Minimal ghost style button for toolbar or header placements.
+
+<Preview>
+  <GoogleButton variant="ghost" />
+</Preview>
+
+```tsx
+<GoogleButton variant="ghost" />
+```
+
+## Examples
+
+### Basic Authentication Button
+
+Simple login button with default styling.
+
+<Preview>
+  <GoogleButton />
+</Preview>
+
+```tsx
+import { GoogleButton } from "@/components/tools/google-button"
+
+export function GoogleAuthButton() {
+  const handleGoogleAuth = () => {
+    // Initiate Google OAuth flow
+    window.location.href = "/api/auth/google"
+  }
+
+  return (
+    <GoogleButton onClick={handleGoogleAuth} />
+  )
+}
+```
+
+### Full-Width Login Form
+
+Large button for prominent login page placement.
+
+<Preview>
+  <GoogleButton size="lg" className="w-full" />
+</Preview>
+
+```tsx
+<div className="w-full max-w-md mx-auto">
+  <GoogleButton
+    size="lg"
+    className="w-full"
+    onClick={handleGoogleAuth}
+  />
+</div>
+```
+
+### Icon Button in Header
+
+Compact icon button for navigation header or toolbar.
+
+<Preview>
+  <GoogleButton size="icon" tooltipText="Sign in with Google" />
+</Preview>
+
+```tsx
+<header className="flex items-center justify-between">
+  <Logo />
+  <nav>
+    <GoogleButton
+      size="icon"
+      tooltipText="Sign in with Google"
+      onClick={handleGoogleAuth}
+    />
+  </nav>
+</header>
+```
