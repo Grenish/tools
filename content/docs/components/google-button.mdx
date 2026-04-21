@@ -11,11 +11,14 @@ A specialized authentication button for Google OAuth sign-in. Combines the Googl
 
 ## Installation
 
-```bash
+```npm
 npx shadcn@latest add button tooltip
 ```
 
 ## Usage
+
+<Tabs items={['Usage', 'Code']}>
+<Tab value="Usage">
 
 ```tsx
 import { GoogleButton } from "@/components/tools/google-button"
@@ -24,6 +27,106 @@ export default function LoginDemo() {
   return <GoogleButton onClick={() => handleGoogleAuth()} />
 }
 ```
+
+</Tab>
+<Tab value="Code">
+
+```tsx
+"use client";
+
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
+import { GoogleLogoIcon } from "@phosphor-icons/react/dist/ssr";
+import * as React from "react";
+
+// Types
+
+type GoogleButtonSize =
+  | "sm"
+  | "default"
+  | "lg"
+  | "icon-xs"
+  | "icon-sm"
+  | "icon"
+  | "icon-lg";
+
+export interface GoogleButtonProps extends React.ComponentProps<typeof Button> {
+  size?: GoogleButtonSize;
+  tooltipText?: string;
+}
+
+// Config
+
+const iconSizeClass: Record<GoogleButtonSize, string> = {
+  sm: "size-3.5",
+  default: "size-4",
+  lg: "size-5",
+  "icon-xs": "size-3",
+  "icon-sm": "size-3.5",
+  icon: "size-4",
+  "icon-lg": "size-5",
+};
+
+const ICON_SIZES: GoogleButtonSize[] = [
+  "icon-xs",
+  "icon-sm",
+  "icon",
+  "icon-lg",
+];
+
+// Component
+
+export function GoogleButton({
+  className,
+  variant = "outline",
+  size = "default",
+  tooltipText = "Google",
+  type = "button",
+  children,
+  ...props
+}: GoogleButtonProps) {
+  const isIcon = ICON_SIZES.includes(size);
+  const iconClass = iconSizeClass[size];
+
+  const button = (
+    <Button
+      variant={variant}
+      size={size}
+      type={type}
+      className={cn(className)}
+      {...props}
+    >
+      <GoogleLogoIcon
+        weight="duotone"
+        className={cn(iconClass, !isIcon && "mr-2")}
+      />
+      {!isIcon && (children ?? <span>Continue with Google</span>)}
+    </Button>
+  );
+
+  if (!isIcon) return button;
+
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>{button}</TooltipTrigger>
+        <TooltipContent>
+          <p>{tooltipText}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
+```
+
+</Tab>
+</Tabs>
 
 ## Features
 
@@ -40,17 +143,55 @@ export default function LoginDemo() {
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `"default" \| "secondary" \| "destructive" \| "outline" \| "ghost" \| "link"` | `"outline"` | Button style variant |
-| `size` | `"sm" \| "default" \| "lg" \| "icon-xs" \| "icon-sm" \| "icon" \| "icon-lg"` | `"default"` | Button size (tooltip only shows for icon sizes) |
-| `tooltipText` | `string` | `"Google"` | Tooltip text displayed in icon mode |
-| `children` | `React.ReactNode` | `"Continue with Google"` | Custom button text for non-icon sizes |
-| `className` | `string` | — | Additional CSS classes |
-| `type` | `"button" \| "submit" \| "reset"` | `"button"` | HTML button type |
-| `disabled` | `boolean` | — | Disable the button |
-| `onClick` | `(e: MouseEvent) => void` | — | Click handler for authentication |
-| `...props` | Button props | — | All other shadcn Button props accepted |
+<TypeTable
+  type={{
+    variant: {
+      type: '"default" | "secondary" | "destructive" | "outline" | "ghost" | "link"',
+      default: '"outline"',
+      description: "Button style variant"
+    },
+    size: {
+      type: '"sm" | "default" | "lg" | "icon-xs" | "icon-sm" | "icon" | "icon-lg"',
+      default: '"default"',
+      description: "Button size (tooltip only shows for icon sizes)"
+    },
+    tooltipText: {
+      type: "string",
+      default: '"Google"',
+      description: "Tooltip text displayed in icon mode"
+    },
+    children: {
+      type: "React.ReactNode",
+      default: '"Continue with Google"',
+      description: "Custom button text for non-icon sizes"
+    },
+    className: {
+      type: "string",
+      default: "undefined",
+      description: "Additional CSS classes"
+    },
+    type: {
+      type: '"button" | "submit" | "reset"',
+      default: '"button"',
+      description: "HTML button type"
+    },
+    disabled: {
+      type: "boolean",
+      default: "undefined",
+      description: "Disable the button"
+    },
+    onClick: {
+      type: "(e: MouseEvent) => void",
+      default: "undefined",
+      description: "Click handler for authentication"
+    },
+    "...props": {
+      type: "Button props",
+      default: "undefined",
+      description: "All other shadcn Button props accepted"
+    }
+  }}
+/>
 
 ## Size Variants
 

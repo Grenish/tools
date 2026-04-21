@@ -17,15 +17,8 @@ import SignupForm from "./tools/blocks/signup-form";
 import ResetPassword from "./tools/blocks/reset-password";
 import SigninForm from "./tools/blocks/signin-form";
 import XButton from "./tools/x-button";
-// import {
-//   Field,
-//   FieldDescription,
-//   FieldGroup,
-//   FieldLabel,
-//   FieldSeparator,
-//   FieldSet,
-// } from "@/components/ui/field";
-// import Link from "next/link";
+import * as TabsComponents from "fumadocs-ui/components/tabs";
+import { TypeTable } from "./type-table";
 
 export function getMDXComponents(components?: MDXComponents) {
   return {
@@ -45,6 +38,8 @@ export function getMDXComponents(components?: MDXComponents) {
     ResetPassword,
     SigninForm,
     XButton,
+    TypeTable,
+    ...TabsComponents,
     ...components,
   } satisfies MDXComponents;
 }

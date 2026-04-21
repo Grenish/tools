@@ -1,4 +1,4 @@
-export const appName = "shadcn/ui";
+export const appName = "Tools";
 export const docsRoute = "/docs";
 export const docsImageRoute = "/og/docs";
 export const docsContentRoute = "/llms.mdx/docs";

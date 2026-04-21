@@ -11,11 +11,14 @@ A versatile delete button component that provides a safe, user-friendly way to h
 
 ## Installation
 
-```bash
+```npm
 npx shadcn@latest add alert-dialog button
 ```
 
 ## Usage
+
+<Tabs items={['Usage', 'Code']}>
+<Tab value="Usage">
 
 ```tsx
 import DeleteButton from "@/components/tools/delete-button"
@@ -23,16 +26,109 @@ import DeleteButton from "@/components/tools/delete-button"
 <DeleteButton />
 ```
 
+</Tab>
+<Tab value="Code">
+
+```tsx
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { TrashIcon } from "@phosphor-icons/react/dist/ssr";
+
+type DeleteButtonProps = {
+  iconOnly?: boolean;
+  size?: React.ComponentProps<typeof Button>["size"];
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  deleteText?: React.ReactNode;
+  cancelText?: React.ReactNode;
+};
+
+export default function DeleteButton({
+  iconOnly = false,
+  size,
+  title = "Are you sure?",
+  description = "This action permanently deletes the link and its associated data. If you may need it later, consider disabling the link instead.",
+  deleteText = "Delete",
+  cancelText = "Cancel",
+}: DeleteButtonProps) {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant={"destructive"}
+          size={size ?? (iconOnly ? "icon" : "default")}
+          aria-label="Delete"
+        >
+          <TrashIcon />
+          {!iconOnly ? "Delete" : null}
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent size="sm">
+        <AlertDialogHeader>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>{cancelText}</AlertDialogCancel>
+          <AlertDialogAction variant={"destructive"}>
+            {deleteText}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+```
+
+</Tab>
+</Tabs>
+
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `iconOnly` | `boolean` | `false` | When `true`, displays only the trash icon; when `false`, displays icon with text |
-| `size` | `"default" \| "sm" \| "lg" \| "icon"` | Defaults to `"icon"` if `iconOnly` is true, otherwise `"default"` | Size variant of the button |
-| `title` | `React.ReactNode` | `"Are you sure?"` | Title text displayed in the confirmation dialog |
-| `description` | `React.ReactNode` | Default deletion warning | Descriptive message shown in the confirmation dialog |
-| `deleteText` | `React.ReactNode` | `"Delete"` | Label text for the delete confirmation button |
-| `cancelText` | `React.ReactNode` | `"Cancel"` | Label text for the cancel button |
+<TypeTable
+  type={{
+    iconOnly: {
+      type: "boolean",
+      default: "false",
+      description: "When `true`, displays only the trash icon; when `false`, displays icon with text"
+    },
+    size: {
+      type: '"default" | "sm" | "lg" | "icon"',
+      default: 'Defaults to "icon" if iconOnly is true, otherwise "default"',
+      description: "Size variant of the button"
+    },
+    title: {
+      type: "React.ReactNode",
+      default: '"Are you sure?"',
+      description: "Title text displayed in the confirmation dialog"
+    },
+    description: {
+      type: "React.ReactNode",
+      default: "Default deletion warning",
+      description: "Descriptive message shown in the confirmation dialog"
+    },
+    deleteText: {
+      type: "React.ReactNode",
+      default: '"Delete"',
+      description: "Label text for the delete confirmation button"
+    },
+    cancelText: {
+      type: "React.ReactNode",
+      default: '"Cancel"',
+      description: "Label text for the cancel button"
+    }
+  }}
+/>
 
 ## Features
 

@@ -1,11 +1,12 @@
 {
   "title": "Components",
   "pages": [
-    "instagram-card",
     "delete-button",
-    "tweet-card",
     "editor",
     "google-button",
-    "view-password-button"
+    "instagram-card",
+    "tweet-card",
+    "view-password-button",
+    "x-button"
   ]
 }

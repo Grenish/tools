@@ -3,57 +3,22 @@ title: Installation
 description: How to install dependencies and structure your app.
 ---
 
-## Frameworks
+**Tools** is built on top of [shadcn/ui](https://ui.shadcn.com) components, providing a foundation for our library. Our components are designed to be opinionated for better consistency, while we work towards making them more flexible.
 
-We have guides for the most popular modern web frameworks.
+## Prerequisites
 
-<Cards>
-  <Card title="Next.js" href="/docs" />
-  <Card title="Vite" href="/docs" />
-  <Card title="Remix" href="/docs" />
-  <Card title="Astro" href="/docs" />
-</Cards>
+Ensure you have a project set up with shadcn/ui. If not, follow the [shadcn/ui installation guide](https://ui.shadcn.com/docs/installation) to get started.
 
-## Manual Installation
+## Installing Dependencies
 
-If you prefer not to use the CLI or your framework is not supported, you can add components to your project manually.
+For icons, install the following package:
 
-### 1. Install dependencies
-
-Components are styled using Tailwind CSS and rely on `clsx` and `tailwind-merge` for class manipulation.
-
-```bash
-npm install tailwind-merge clsx
+```npm
+npm install @phosphor-icons/react
 ```
 
-### 2. Configure path aliases
+For other components, refer to the shadcn/ui documentation to add the required base components. You can copy and paste the necessary code from their examples.
 
-We use the `@` alias to resolve imports. You need to configure this in your `tsconfig.json`.
-
-```json title="tsconfig.json"
-{
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./*"]
-    }
-  }
-}
-```
-
-### 3. Add a cn helper
-
-We use a `cn` helper to make it easier to conditionally add Tailwind CSS classes.
-
-```ts title="lib/utils.ts"
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
-```
-
-### 4. That's it
-
-You can now start adding components to your project. Browse the documentation to find components you need, copy their source code, and paste them into your project.
+<Callout type="info">
+  We're actively developing a CLI tool to integrate seamlessly with your shadcn/ui setup via registries, making installation more streamlined in the future.
+</Callout>

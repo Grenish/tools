@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   ),
-  title: "shadcn/ui",
+  title: "Tools",
   description:
     "Beautifully designed components that you can copy and paste into your apps.",
 };
