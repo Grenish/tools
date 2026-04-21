@@ -1,0 +1,238 @@
+---
+title: X Button
+description: A customizable button component for X (formerly Twitter) integration, featuring multiple sizes, variants, and tooltip support for icon-only modes.
+---
+
+A versatile button component designed for X (formerly Twitter) authentication or sharing. It supports various sizes, button variants, and includes built-in tooltip functionality for icon-only buttons to enhance accessibility.
+
+<Preview>
+  <XButton />
+</Preview>
+
+## Installation
+
+```npm
+npx shadcn@latest add button tooltip
+```
+
+## Usage
+
+<Tabs items={['Usage', 'Code']}>
+  <Tab value="Usage">
+    ```tsx
+    import XButton from "@/components/tools/x-button"
+
+    <XButton />
+    ```
+  </Tab>
+  <Tab value="code">
+    ```tsx
+    "use client";
+
+    import { XLogoIcon } from "@phosphor-icons/react/dist/ssr";
+    import { Button } from "@/components/ui/button";
+    import {
+      Tooltip,
+      TooltipContent,
+      TooltipProvider,
+      TooltipTrigger,
+    } from "@/components/ui/tooltip";
+    import { cn } from "@/lib/utils";
+    import * as React from "react";
+
+    // Types
+
+    type XButtonSize =
+      | "sm"
+      | "default"
+      | "lg"
+      | "icon-xs"
+      | "icon-sm"
+      | "icon"
+      | "icon-lg";
+
+    export interface XButtonProps extends React.ComponentProps<typeof Button> {
+      size?: XButtonSize;
+      tooltipText?: string;
+    }
+
+    // Config
+
+    const iconSizeClass: Record<XButtonSize, string> = {
+      sm: "size-3.5",
+      default: "size-4",
+      lg: "size-5",
+      "icon-xs": "size-3",
+      "icon-sm": "size-3.5",
+      icon: "size-4",
+      "icon-lg": "size-5",
+    };
+
+    const ICON_SIZES: XButtonSize[] = [
+      "icon-xs",
+      "icon-sm",
+      "icon",
+      "icon-lg",
+    ];
+
+    // Component
+
+    export default function XButton({
+      className,
+      variant = "outline",
+      size = "default",
+      tooltipText = "X",
+      type = "button",
+      children,
+      ...props
+    }: XButtonProps) {
+      const isIcon = ICON_SIZES.includes(size);
+      const iconClass = iconSizeClass[size];
+
+      const button = (
+        <Button
+          variant={variant}
+          size={size}
+          type={type}
+          className={cn(className)}
+          {...props}
+        >
+          <XLogoIcon weight="duotone" className={cn(iconClass, !isIcon && "mr-2")} />
+          {!isIcon && (children ?? <span>Continue with X</span>)}
+        </Button>
+      );
+
+      if (!isIcon) return button;
+
+      return (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>{button}</TooltipTrigger>
+            <TooltipContent>
+              <p>{tooltipText}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Props
+
+<TypeTable
+  type={{
+    size: {
+      type: '"sm" | "default" | "lg" | "icon-xs" | "icon-sm" | "icon" | "icon-lg"',
+      default: '"default"',
+      description: "Size variant of the button"
+    },
+    tooltipText: {
+      type: "string",
+      default: '"X"',
+      description: "Tooltip text displayed for icon-only buttons"
+    },
+    variant: {
+      type: "Button variant",
+      default: '"outline"',
+      description: "Button variant (inherits from Button component)"
+    },
+    className: {
+      type: "string",
+      default: "undefined",
+      description: "Additional CSS classes"
+    },
+    children: {
+      type: "React.ReactNode",
+      default: "undefined",
+      description: "Custom content for non-icon sizes"
+    },
+    "...props": {
+      type: "Button props",
+      default: "undefined",
+      description: "All other Button component props"
+    }
+  }}
+/>
+
+## Features
+
+- Multiple Size Variants: Supports standard and icon-specific sizes for different UI contexts
+- Tooltip Integration: Automatic tooltip for icon-only buttons to improve accessibility
+- Customizable Variants: Inherits all button variants from the base Button component
+- Flexible Content: Allows custom children or defaults to "Continue with X" text
+- Icon Scaling: Icons automatically adjust size based on button size
+- Type-Safe Props: Fully typed with TypeScript interfaces
+
+## Examples
+
+### Default Configuration
+
+<Preview>
+  <XButton />
+</Preview>
+
+```tsx
+<XButton />
+```
+
+### Icon Only
+
+<Preview>
+  <XButton size="icon" />
+</Preview>
+
+```tsx
+<XButton size="icon" />
+```
+
+### Custom Variant
+
+<Preview>
+  <XButton variant="default" />
+</Preview>
+
+```tsx
+<XButton variant="default" />
+```
+
+### Small Size
+
+<Preview>
+  <XButton size="sm" />
+</Preview>
+
+```tsx
+<XButton size="sm" />
+```
+
+### Large Size
+
+<Preview>
+  <XButton size="lg" />
+</Preview>
+
+```tsx
+<XButton size="lg" />
+```
+
+### Custom Tooltip Text
+
+<Preview>
+  <XButton size="icon" tooltipText="Share on X" />
+</Preview>
+
+```tsx
+<XButton size="icon" tooltipText="Share on X" />
+```
+
+### Custom Children
+
+<Preview>
+  <XButton>Sign in with X</XButton>
+</Preview>
+
+```tsx
+<XButton>Sign in with X</XButton>
+```
