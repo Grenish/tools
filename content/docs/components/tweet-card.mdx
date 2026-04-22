@@ -6,7 +6,16 @@ description: A versatile Twitter/X-style card component for displaying tweets wi
 A beautifully designed card component inspired by Twitter/X's tweet layout. Display user profiles, tweet content, media galleries, and engagement statistics in a customizable, responsive format.
 
 <Preview>
-  <TweetCard profileName="Sarah Chen" tweet="Just shipped an amazing new feature! 🚀" />
+  <TweetCard
+    avatarSrc="https://github.com/grenish.png"
+    bio="Who?"
+    profileName="Grenish Rai"
+    tweet="Just shipped an amazing new feature! 🚀"
+    likes={20000}
+    replies={3000}
+    retweets={4000}
+    timestamp={"12:23 AM · Apr 18, 2026"}
+  />
 </Preview>
 
 ## Installation
@@ -21,11 +30,11 @@ npx shadcn@latest add card avatar button aspect-ratio item
 <Tab value="Usage">
 
 ```tsx
-import TweetCard from "@/components/tools/tweet-card"
+import TweetCard from "@/components/tools/tweet-card";
 
 export default function Demo() {
   return (
-    <TweetCard 
+    <TweetCard
       profileName="Sarah Chen"
       bio="Product Designer"
       tweet="Just shipped an amazing new feature! 🚀"
@@ -33,7 +42,7 @@ export default function Demo() {
       retweets={340}
       replies={85}
     />
-  )
+  );
 }
 ```
 
@@ -420,58 +429,58 @@ export default function TweetCard({
     profileName: {
       type: "string",
       default: "undefined",
-      description: "**Required.** Display name of the profile"
+      description: "**Required.** Display name of the profile",
     },
     tweet: {
       type: "string",
       default: "undefined",
-      description: "Tweet or status text content"
+      description: "Tweet or status text content",
     },
     avatarSrc: {
       type: "string",
       default: "GitHub shadcn avatar",
-      description: "URL of the profile avatar image"
+      description: "URL of the profile avatar image",
     },
     bio: {
       type: "string",
       default: "undefined",
-      description: "Short bio or handle text below the profile name"
+      description: "Short bio or handle text below the profile name",
     },
     timestamp: {
       type: "string",
       default: "undefined",
-      description: "Tweet timestamp or date (e.g., \"Nov 15, 2024\")"
+      description: 'Tweet timestamp or date (e.g., "Nov 15, 2024")',
     },
     media: {
       type: "string[]",
       default: "[]",
-      description: "Array of image URLs (max 4 shown)"
+      description: "Array of image URLs (max 4 shown)",
     },
     likes: {
       type: "number",
       default: "undefined",
-      description: "Number of likes (formatted automatically)"
+      description: "Number of likes (formatted automatically)",
     },
     retweets: {
       type: "number",
       default: "undefined",
-      description: "Number of retweets (formatted automatically)"
+      description: "Number of retweets (formatted automatically)",
     },
     replies: {
       type: "number",
       default: "undefined",
-      description: "Number of replies (formatted automatically)"
+      description: "Number of replies (formatted automatically)",
     },
     size: {
       type: '"sm" | "md" | "lg" | "xl"',
       default: '"md"',
-      description: "Card size variant"
+      description: "Card size variant",
     },
     className: {
       type: "string",
       default: "undefined",
-      description: "Additional CSS classes for the card"
-    }
+      description: "Additional CSS classes for the card",
+    },
   }}
 />
 
@@ -484,19 +493,11 @@ Each size maintains perfect proportions with scaled typography, spacing, and ima
 Compact variant suitable for sidebars, lists, and narrow spaces.
 
 <Preview>
-  <TweetCard 
-    size="sm"
-    profileName="Alex Kim"
-    tweet="Great day for coding!"
-  />
+  <TweetCard size="sm" profileName="Alex Kim" tweet="Great day for coding!" />
 </Preview>
 
 ```tsx
-<TweetCard 
-  size="sm"
-  profileName="Alex Kim"
-  tweet="Great day for coding!"
-/>
+<TweetCard size="sm" profileName="Alex Kim" tweet="Great day for coding!" />
 ```
 
 ### Medium (Default)
@@ -504,7 +505,7 @@ Compact variant suitable for sidebars, lists, and narrow spaces.
 Balanced size for general use and content areas.
 
 <Preview>
-  <TweetCard 
+  <TweetCard
     size="md"
     profileName="Sarah Chen"
     tweet="Just shipped an amazing new feature! 🚀"
@@ -513,7 +514,7 @@ Balanced size for general use and content areas.
 </Preview>
 
 ```tsx
-<TweetCard 
+<TweetCard
   size="md"
   profileName="Sarah Chen"
   tweet="Just shipped an amazing new feature! 🚀"
@@ -526,7 +527,7 @@ Balanced size for general use and content areas.
 Prominent display variant for featured content and spotlights.
 
 <Preview>
-  <TweetCard 
+  <TweetCard
     size="lg"
     profileName="Jordan Lee"
     bio="Creator & Developer"
@@ -539,7 +540,7 @@ Prominent display variant for featured content and spotlights.
 </Preview>
 
 ```tsx
-<TweetCard 
+<TweetCard
   size="lg"
   profileName="Jordan Lee"
   bio="Creator & Developer"
@@ -560,22 +561,22 @@ The component automatically arranges media based on the number of images provide
 Display one featured image with 16:9 aspect ratio.
 
 <Preview>
-  <TweetCard 
+  <TweetCard
     profileName="Emma Wilson"
     tweet="Beautiful sunset at the beach 🌅"
     media={[
-      "https://images.unsplash.com/photo-1495567720989-cebdbdd97913?q=80&w=1200&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1495567720989-cebdbdd97913?q=80&w=1200&auto=format&fit=crop",
     ]}
     likes={2100}
   />
 </Preview>
 
 ```tsx
-<TweetCard 
+<TweetCard
   profileName="Emma Wilson"
   tweet="Beautiful sunset at the beach 🌅"
   media={[
-    "https://images.unsplash.com/photo-1495567720989-cebdbdd97913?q=80&w=1200&auto=format&fit=crop"
+    "https://images.unsplash.com/photo-1495567720989-cebdbdd97913?q=80&w=1200&auto=format&fit=crop",
   ]}
 />
 ```
@@ -585,12 +586,12 @@ Display one featured image with 16:9 aspect ratio.
 Side-by-side image arrangement with equal columns.
 
 <Preview>
-  <TweetCard 
+  <TweetCard
     profileName="Chris Park"
     tweet="Before and after comparison shots"
     media={[
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
     ]}
     likes={890}
     retweets={234}
@@ -598,12 +599,12 @@ Side-by-side image arrangement with equal columns.
 </Preview>
 
 ```tsx
-<TweetCard 
+<TweetCard
   profileName="Chris Park"
   tweet="Before and after comparison shots"
   media={[
     "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop"
+    "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
   ]}
 />
 ```
@@ -615,7 +616,7 @@ Side-by-side image arrangement with equal columns.
 All available props combined for maximum detail.
 
 <Preview>
-  <TweetCard 
+  <TweetCard
     profileName="Elena Rodriguez"
     bio="Product Designer at TechCorp"
     avatarSrc="https://github.com/shadcn.png"
@@ -623,7 +624,7 @@ All available props combined for maximum detail.
     timestamp="Nov 15, 2024"
     media={[
       "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop",
     ]}
     likes={4500}
     retweets={1200}
@@ -633,7 +634,7 @@ All available props combined for maximum detail.
 </Preview>
 
 ```tsx
-<TweetCard 
+<TweetCard
   profileName="Elena Rodriguez"
   bio="Product Designer at TechCorp"
   avatarSrc="https://github.com/shadcn.png"
@@ -641,7 +642,7 @@ All available props combined for maximum detail.
   timestamp="Nov 15, 2024"
   media={[
     "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop"
+    "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop",
   ]}
   likes={4500}
   retweets={1200}
@@ -655,19 +656,11 @@ All available props combined for maximum detail.
 Bare-bones usage with just a profile and tweet text.
 
 <Preview>
-  <TweetCard 
-    size="sm"
-    profileName="Quick Tweet"
-    tweet="Simple and clean"
-  />
+  <TweetCard size="sm" profileName="Quick Tweet" tweet="Simple and clean" />
 </Preview>
 
 ```tsx
-<TweetCard 
-  size="sm"
-  profileName="Quick Tweet"
-  tweet="Simple and clean"
-/>
+<TweetCard size="sm" profileName="Quick Tweet" tweet="Simple and clean" />
 ```
 
 ### Tweet with Timestamp
@@ -675,7 +668,7 @@ Bare-bones usage with just a profile and tweet text.
 Display tweet date and time information for context.
 
 <Preview>
-  <TweetCard 
+  <TweetCard
     profileName="News Reporter"
     bio="Journalist"
     tweet="Breaking: New industry report just released"
@@ -688,7 +681,7 @@ Display tweet date and time information for context.
 </Preview>
 
 ```tsx
-<TweetCard 
+<TweetCard
   profileName="News Reporter"
   bio="Journalist"
   tweet="Breaking: New industry report just released"
