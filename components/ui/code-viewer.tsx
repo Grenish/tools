@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ChevronDown,
   ChevronRight,
@@ -23,7 +23,103 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useTheme } from "next-themes";
+import type { Highlighter } from "shiki";
 
+// Shiki singleton — created once, shared across all CodeContent instances
+let highlighterPromise: Promise<Highlighter> | null = null;
+
+function getHighlighter(): Promise<Highlighter> {
+  if (!highlighterPromise) {
+    highlighterPromise = import("shiki").then(({ createHighlighter }) =>
+      createHighlighter({
+        themes: ["github-dark", "github-light"],
+        // Load a broad but finite set of languages upfront so the
+        // highlighter is ready synchronously on subsequent calls.
+        langs: [
+          "typescript",
+          "javascript",
+          "tsx",
+          "jsx",
+          "css",
+          "json",
+          "rust",
+          "python",
+          "bash",
+          "yaml",
+          "html",
+          "markdown",
+          "text",
+        ],
+      }),
+    );
+  }
+  return highlighterPromise;
+}
+
+type SupportedPrettierParser =
+  | "typescript"
+  | "babel"
+  | "json"
+  | "css"
+  | "html"
+  | "markdown"
+  | "yaml";
+
+type PrettierBundle = {
+  format: (
+    source: string,
+    options: Record<string, unknown>,
+  ) => Promise<string>;
+  plugins: object[];
+};
+
+let prettierPromise: Promise<PrettierBundle> | null = null;
+
+function resolvePrettierPlugin(module: { default?: object }): object {
+  return module.default ?? module;
+}
+
+function getPrettier(): Promise<PrettierBundle> {
+  if (!prettierPromise) {
+    prettierPromise = Promise.all([
+      import("prettier/standalone"),
+      import("prettier/plugins/babel"),
+      import("prettier/plugins/estree"),
+      import("prettier/plugins/typescript"),
+      import("prettier/plugins/postcss"),
+      import("prettier/plugins/html"),
+      import("prettier/plugins/markdown"),
+      import("prettier/plugins/yaml"),
+    ]).then(
+      ([
+        prettier,
+        babel,
+        estree,
+        typescript,
+        postcss,
+        html,
+        markdown,
+        yaml,
+      ]) => ({
+        format: prettier.format,
+        plugins: [
+          resolvePrettierPlugin(babel),
+          resolvePrettierPlugin(estree),
+          resolvePrettierPlugin(typescript),
+          resolvePrettierPlugin(postcss),
+          resolvePrettierPlugin(html),
+          resolvePrettierPlugin(markdown),
+          resolvePrettierPlugin(yaml),
+        ],
+      }),
+    );
+  }
+
+  return prettierPromise;
+}
+
+// Types
 export interface FileItem {
   name: string;
   path: string;
@@ -50,6 +146,7 @@ interface TreeItemProps {
   onToggleFolder: (path: string) => void;
 }
 
+// Constants
 const LANGUAGE_BADGE_COLORS: Record<string, string> = {
   typescript: "bg-blue-500/10 text-blue-400 border-blue-500/20",
   javascript: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
@@ -61,8 +158,101 @@ const LANGUAGE_BADGE_COLORS: Record<string, string> = {
   python: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
 };
 
+// Helpers
 function getFileExtension(name: string): string {
-  return name.split(".").pop()?.toLowerCase() || "";
+  return name.split(".").pop()?.toLowerCase() ?? "";
+}
+
+/**
+ * Normalise language aliases so Shiki always receives a name it recognises.
+ */
+function normaliseLanguage(language?: string): string {
+  switch (language?.toLowerCase()) {
+    case "typescript":
+      return "typescript";
+    case "javascript":
+      return "javascript";
+    case "shell":
+    case "sh":
+    case "bash":
+      return "bash";
+    case "yml":
+    case "yaml":
+      return "yaml";
+    case "plaintext":
+    case "text":
+    case "":
+    case undefined:
+      return "text";
+    default:
+      return language?.toLowerCase() ?? "text";
+  }
+}
+
+function getPrettierConfig(
+  path?: string,
+  language?: string,
+): { parser: SupportedPrettierParser; filepath: string } | null {
+  const extension = getFileExtension(path?.split("/").pop() ?? "");
+  const lang = normaliseLanguage(language);
+
+  if (extension === "ts" || extension === "tsx" || lang === "typescript") {
+    return {
+      parser: "typescript",
+      filepath: path ?? "snippet.tsx",
+    };
+  }
+
+  if (
+    ["js", "jsx", "mjs", "cjs"].includes(extension) ||
+    lang === "javascript" ||
+    lang === "jsx"
+  ) {
+    return {
+      parser: "babel",
+      filepath: path ?? "snippet.jsx",
+    };
+  }
+
+  if (extension === "json" || lang === "json") {
+    return {
+      parser: "json",
+      filepath: path ?? "snippet.json",
+    };
+  }
+
+  if (extension === "css" || lang === "css") {
+    return {
+      parser: "css",
+      filepath: path ?? "snippet.css",
+    };
+  }
+
+  if (extension === "html" || lang === "html") {
+    return {
+      parser: "html",
+      filepath: path ?? "snippet.html",
+    };
+  }
+
+  if (
+    ["md", "mdx", "markdown"].includes(extension) ||
+    lang === "markdown"
+  ) {
+    return {
+      parser: "markdown",
+      filepath: path ?? (extension === "mdx" ? "snippet.mdx" : "snippet.md"),
+    };
+  }
+
+  if (["yml", "yaml"].includes(extension) || lang === "yaml") {
+    return {
+      parser: "yaml",
+      filepath: path ?? "snippet.yml",
+    };
+  }
+
+  return null;
 }
 
 function findFileByPath(
@@ -70,7 +260,6 @@ function findFileByPath(
   targetPath?: string,
 ): FileItem | undefined {
   if (!targetPath) return undefined;
-
   for (const item of items) {
     if (item.path === targetPath && item.type === "file") return item;
     if (item.children) {
@@ -78,10 +267,10 @@ function findFileByPath(
       if (match) return match;
     }
   }
-
   return undefined;
 }
 
+// TreeItem
 function TreeItem({
   item,
   level,
@@ -156,54 +345,165 @@ function TreeItem({
   );
 }
 
-function LineNumbers({ count }: { count: number }) {
-  return (
-    <div className="select-none pr-4 text-right" aria-hidden>
-      {Array.from({ length: count }, (_, i) => (
-        <div
-          key={i}
-          className="leading-6 text-[12px] text-muted-foreground/30 font-mono"
-        >
-          {i + 1}
-        </div>
-      ))}
-    </div>
-  );
-}
+// CodeContent
+type TokenLine = Array<{ content: string; color?: string }>;
 
 function CodeContent({
   content,
+  path,
+  language,
   showLineNumbers,
   highlightLines,
 }: {
   content: string;
+  path?: string;
+  language?: string;
   showLineNumbers: boolean;
   highlightLines: number[];
 }) {
-  const lines = content.split("\n");
+  const { resolvedTheme } = useTheme();
+  const lang = normaliseLanguage(language);
+  const theme = resolvedTheme === "dark" ? "github-dark" : "github-light";
+  const [displayContent, setDisplayContent] = useState(content);
+
+  // null  = still loading / not yet highlighted
+  // false = highlighting failed, fall back to plain text
+  const [tokenLines, setTokenLines] = useState<TokenLine[] | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function formatContent() {
+      setDisplayContent(content);
+
+      const prettierConfig = getPrettierConfig(path, language);
+      if (!prettierConfig) return;
+
+      try {
+        const prettier = await getPrettier();
+        const formatted = await prettier.format(content, {
+          parser: prettierConfig.parser,
+          filepath: prettierConfig.filepath,
+          plugins: prettier.plugins,
+        });
+
+        if (!cancelled) {
+          setDisplayContent(
+            formatted.endsWith("\n") ? formatted.slice(0, -1) : formatted,
+          );
+        }
+      } catch {
+        if (!cancelled) setDisplayContent(content);
+      }
+    }
+
+    void formatContent();
+    return () => {
+      cancelled = true;
+    };
+  }, [content, language, path]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function highlight() {
+      // Reset so the previous file's tokens don't flash while the new ones load
+      setTokenLines(null);
+
+      try {
+        const highlighter = await getHighlighter();
+
+        // Shiki may not have the exact language loaded yet (e.g. a rare one).
+        // loadLanguage is a no-op if the language is already present.
+        const loadedLangs = highlighter.getLoadedLanguages();
+        if (!loadedLangs.includes(lang as never) && lang !== "text") {
+          try {
+            await highlighter.loadLanguage(lang as never);
+          } catch {
+            // Unknown language — fall back to plain text highlighting
+          }
+        }
+
+        const tokens = highlighter.codeToTokensBase(displayContent, {
+          lang: lang as never,
+          theme,
+        });
+
+        if (!cancelled) {
+          setTokenLines(
+            tokens.map((line) =>
+              line.map((token) => ({
+                content: token.content,
+                color: token.color,
+              })),
+            ),
+          );
+        }
+      } catch {
+        if (!cancelled) setTokenLines(false as unknown as null);
+      }
+    }
+
+    void highlight();
+    return () => {
+      cancelled = true;
+    };
+  }, [displayContent, lang, theme]);
+
+  // Plain-text fallback while Shiki loads or if it errored
+  const plainLines: TokenLine[] = displayContent
+    .split("\n")
+    .map((line) => [{ content: line }]);
+
+  const lines = tokenLines ?? plainLines;
 
   return (
-    <div className="flex min-w-max">
-      {showLineNumbers && <LineNumbers count={lines.length} />}
-      <div className="min-w-max">
-        {lines.map((line, i) => (
+    <div
+      className={cn(
+        "min-w-max font-mono text-[13px] leading-6 text-foreground antialiased [font-variant-ligatures:none]",
+        "selection:bg-primary/18 selection:text-foreground",
+      )}
+    >
+      {lines.map((lineTokens, index) => {
+        const isHighlighted = highlightLines.includes(index + 1);
+
+        return (
           <div
-            key={i}
+            key={index}
             className={cn(
-              "leading-6 text-[13px] font-mono whitespace-pre",
-              highlightLines.includes(i + 1)
-                ? "bg-primary/5 border-l-2 border-primary pl-2 -ml-2"
-                : "",
+              "group flex min-w-max rounded-md",
+              isHighlighted &&
+                "bg-accent/55 shadow-[inset_2px_0_0_0_var(--color-primary)]",
             )}
           >
-            {line || <span className="text-transparent">·</span>}
+            {showLineNumbers && (
+              <div className="mr-4 flex h-6 w-9 shrink-0 select-none items-center justify-end border-r border-border/70 pr-3 text-[12px] text-muted-foreground/70 tabular-nums">
+                {index + 1}
+              </div>
+            )}
+            <div className="min-w-max px-1.5">
+              {lineTokens.length > 0 ? (
+                lineTokens.map((token, tokenIndex) => (
+                  <span
+                    key={`${index}-${tokenIndex}`}
+                    className="whitespace-pre"
+                    style={token.color ? { color: token.color } : undefined}
+                  >
+                    {token.content}
+                  </span>
+                ))
+              ) : (
+                <span className="whitespace-pre"> </span>
+              )}
+            </div>
           </div>
-        ))}
-      </div>
+        );
+      })}
     </div>
   );
 }
 
+// CodeViewer
 export function CodeViewer({
   files,
   defaultSelectedPath,
@@ -370,9 +670,11 @@ export function CodeViewer({
           {/* Code Area */}
           {selectedPath ? (
             <ScrollArea className="min-h-0 flex-1">
-              <div className="p-4 sm:p-5">
+              <div className="px-4 py-5 sm:px-6 sm:py-5">
                 <CodeContent
                   content={selectedContent}
+                  path={selectedPath}
+                  language={selectedLanguage || ext}
                   showLineNumbers={showLineNumbers}
                   highlightLines={highlightLines}
                 />
