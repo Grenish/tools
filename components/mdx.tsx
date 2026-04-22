@@ -19,7 +19,9 @@ import SigninForm from "./tools/blocks/signin-form";
 import XButton from "./tools/x-button";
 import * as TabsComponents from "fumadocs-ui/components/tabs";
 import { TypeTable } from "./type-table";
-
+import { File, Folder, Files } from "fumadocs-ui/components/files";
+import { CodeBlock, Pre } from "fumadocs-ui/components/codeblock";
+import { CodeViewer } from "./ui/code-viewer";
 export function getMDXComponents(components?: MDXComponents) {
   return {
     ...defaultMdxComponents,
@@ -39,6 +41,15 @@ export function getMDXComponents(components?: MDXComponents) {
     SigninForm,
     XButton,
     TypeTable,
+    File,
+    Folder,
+    Files,
+    CodeViewer,
+    pre: ({ ref: _ref, ...props }) => (
+      <CodeBlock {...props}>
+        <Pre>{props.children}</Pre>
+      </CodeBlock>
+    ),
     ...TabsComponents,
     ...components,
   } satisfies MDXComponents;

@@ -6,14 +6,14 @@ import {
   DocsTitle,
   MarkdownCopyButton,
   ViewOptionsPopover,
+  PageLastUpdate,
 } from "fumadocs-ui/layouts/docs/page";
 import { notFound } from "next/navigation";
-import { getMDXComponents } from "@/components/mdx";
 import type { Metadata } from "next";
 import { createRelativeLink } from "fumadocs-ui/mdx";
 import { gitConfig } from "@/lib/shared";
-import { TOCProvider } from "fumadocs-ui/layouts/docs/page/slots/toc";
-import { TOC, TOCPopover } from "@/layouts/notebook/page/slots/toc";
+import { getGithubLastEdit } from "fumadocs-core/content/github";
+import { getMDXComponents } from "@/components/mdx";
 
 export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
   const params = await props.params;
@@ -23,18 +23,24 @@ export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
   const MDX = page.data.body;
   const markdownUrl = getPageMarkdownUrl(page).url;
 
+  const lastModifiedTime = await getGithubLastEdit({
+    owner: "grenish",
+    repo: "tools",
+    path: `content/docs/${page.path}`,
+  });
+
   return (
     <DocsPage
       tableOfContent={{
         style: "clerk",
       }}
       toc={page.data.toc}
-      // full={page.data.full}
     >
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription className="mb-0">
         {page.data.description}
       </DocsDescription>
+      {lastModifiedTime && <PageLastUpdate date={lastModifiedTime} />}
       <div className="flex flex-row gap-2 items-center border-b pb-6">
         <MarkdownCopyButton markdownUrl={markdownUrl} />
         <ViewOptionsPopover

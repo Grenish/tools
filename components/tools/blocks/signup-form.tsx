@@ -86,7 +86,7 @@ export default function Signup() {
         <FieldSet>
           <Field orientation={"horizontal"}>
             <Button>Create Account</Button>
-            <Link href={"/signin"}>
+            <Link href={""}>
               <Button variant={"outline"}>Already have an account?</Button>
             </Link>
           </Field>

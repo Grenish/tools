@@ -61,7 +61,7 @@ export default function Signin() {
             <Button>
               <SignInIcon /> Signin
             </Button>
-            <Link href={"/signup"}>
+            <Link href={""}>
               <Button variant={"outline"}>Create an account?</Button>
             </Link>
           </Field>

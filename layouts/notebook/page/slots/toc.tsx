@@ -22,6 +22,7 @@ import {
   CollapsibleTrigger,
   CollapsibleContent,
 } from "../../../../components/ui/collapsible";
+import { useNotebookLayout } from "../..";
 
 export type TOCProviderProps = Base.TOCProviderProps;
 

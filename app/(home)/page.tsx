@@ -3,11 +3,11 @@ import Link from "next/link";
 export default function HomePage() {
   return (
     <main className="container mx-auto flex flex-1 flex-col justify-center px-4 py-24 md:px-8 md:py-32 lg:py-40">
-      <section className="mx-auto flex max-w-[980px] flex-col items-center gap-4 text-center">
+      <section className="mx-auto flex max-w-245 flex-col items-center gap-4 text-center">
         <h1 className="text-balance text-4xl font-extrabold tracking-tight lg:text-6xl lg:leading-[1.1]">
           Build your component library.
         </h1>
-        <p className="max-w-[750px] text-balance text-lg text-muted-foreground sm:text-xl">
+        <p className="max-w-187.5 text-balance text-lg text-muted-foreground sm:text-xl">
           Beautifully designed components that you can copy and paste into your
           apps. Accessible. Customizable. Open Source.
         </p>
