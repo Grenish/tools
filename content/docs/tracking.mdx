@@ -1,0 +1,113 @@
+---
+title: Tracking & Cookies
+description: How we use PostHog analytics and cookies on the Tools documentation site.
+---
+
+## Overview
+
+This site uses [PostHog](https://posthog.com) for privacy-friendly product analytics. We track a small set of meaningful events to understand how components are discovered, viewed, and installed — helping us prioritize development and improve documentation.
+
+<Callout type="info">
+  Analytics are **only active in production**. In local development, PostHog is never initialized and all tracking calls are no-ops.
+</Callout>
+
+## What We Track
+
+| Event | When It Fires | Properties |
+| --- | --- | --- |
+| `component_viewed` | A component or block docs page is opened | `component` |
+| `component_installed` | A `@grenish/*` CLI install command is copied | `component` |
+| `cli_command_copied` | Any CLI command is copied from a code block | `command`, `component` |
+| `docs_search_performed` | A search query is entered (debounced, 500ms) | `query` |
+
+### Event Details
+
+**`component_viewed`** — Fires once when a user navigates to any page under `/docs/components/*` or `/docs/blocks/*`. This uses a lightweight client component that triggers on mount.
+
+**`component_installed`** — Fires when a user copies a CLI command containing `@grenish/` from a code block. This is a strong signal that a user intends to install the component.
+
+**`cli_command_copied`** — Fires when any package manager command (`npx`, `npm`, `pnpm`, `bun`, `yarn`) is copied from a code block. Broader than `component_installed` — includes manual dependency installs too.
+
+**`docs_search_performed`** — Fires after 500ms of typing inactivity in the search bar. Debounced to avoid flooding analytics on every keystroke.
+
+<Callout type="note">
+  **Registry fetches** (`/r/*.json`) cannot be tracked from the docs site directly because the site is statically exported. If you need install counts, use your hosting provider's analytics (e.g. Vercel Analytics, Cloudflare Analytics) to monitor requests to `/r/*.json`.
+</Callout>
+
+## Cookies
+
+PostHog sets the following cookies when analytics are active:
+
+| Cookie | Purpose | Duration |
+| --- | --- | --- |
+| `ph_*_posthog` | Stores the anonymous distinct ID and session info | 1 year |
+| `ph_*_window_id` | Tracks the current browser tab/window session | Session |
+
+<Callout type="warning">
+  No personally identifiable information (PII) is collected. PostHog generates an anonymous `distinct_id` for each visitor. We do not use `posthog.identify()` anywhere on this site.
+</Callout>
+
+## How It Works
+
+### Client-Side Initialization
+
+PostHog is initialized via Next.js `instrumentation-client.ts`, which runs once on the client in production:
+
+```ts title="instrumentation-client.ts"
+import posthog from "posthog-js";
+
+if (process.env.NODE_ENV === "production") {
+  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN!, {
+    api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+    ui_host: "https://us.posthog.com",
+    defaults: "2026-01-30",
+    capture_exceptions: true,
+  });
+}
+```
+
+### Centralized Analytics Module
+
+All tracking calls go through `lib/analytics.ts`. This keeps event names and properties consistent and makes it easy to add, modify, or remove events in one place:
+
+```ts title="lib/analytics.ts"
+import posthog from "posthog-js";
+
+export function trackComponentViewed(component: string) {
+  posthog.capture("component_viewed", { component });
+}
+
+export function trackComponentInstalled(component: string) {
+  posthog.capture("component_installed", { component });
+}
+
+export function trackCliCommandCopied(command: string, component?: string) {
+  posthog.capture("cli_command_copied", { command, component });
+}
+
+export function trackDocsSearch(query: string) {
+  posthog.capture("docs_search_performed", { query });
+}
+```
+
+### Code Block Copy Tracking
+
+CLI commands are tracked via a `TrackedCodeBlock` wrapper around the MDX `pre` element. It listens for native `copy` events and checks if the copied text is a package manager command:
+
+```tsx title="components/analytics/tracked-code-block.tsx"
+// Wraps fumadocs CodeBlock
+// Listens for clipboard copy events
+// Detects npx/npm/pnpm/bun/yarn commands
+// Fires cli_command_copied (and component_installed for @grenish/*)
+```
+
+## Environment Variables
+
+| Variable | Required | Description |
+| --- | --- | --- |
+| `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` | Yes | Your PostHog project API key |
+| `NEXT_PUBLIC_POSTHOG_HOST` | Yes | PostHog ingestion endpoint (e.g. `https://us.i.posthog.com`) |
+
+## Opting Out
+
+PostHog respects the [Do Not Track](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/DNT) browser setting. You can also block analytics by using any standard ad blocker or privacy extension.
