@@ -14,6 +14,7 @@ import { createRelativeLink } from "fumadocs-ui/mdx";
 import { gitConfig } from "@/lib/shared";
 import { getGithubLastEdit } from "fumadocs-core/content/github";
 import { getMDXComponents } from "@/components/mdx";
+import { ComponentViewTracker } from "@/components/analytics/component-view-tracker";
 
 export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
   const params = await props.params;
@@ -36,6 +37,9 @@ export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
       }}
       toc={page.data.toc}
     >
+      {(params.slug?.[0] === "components" || params.slug?.[0] === "blocks") && params.slug?.[1] && (
+        <ComponentViewTracker component={params.slug[1]} />
+      )}
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription className="mb-0">
         {page.data.description}
