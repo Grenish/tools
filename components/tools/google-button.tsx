@@ -61,13 +61,7 @@ export function GoogleButton({
   const iconClass = iconSizeClass[size];
 
   const button = (
-    <Button
-      variant={variant}
-      size={size}
-      type={type}
-      className={cn(className)}
-      {...props}
-    >
+    <Button variant={variant} size={size} type={type} className={cn(className)} {...props}>
       <GoogleLogoIcon
         weight="duotone"
         className={cn(iconClass, !isIcon && "mr-2")}
