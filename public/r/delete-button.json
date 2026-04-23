@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "delete-button",
+  "title": "Delete Button",
+  "description": "A destructive delete button with a built-in confirmation dialog. Supports icon-only mode and customizable text.",
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "registryDependencies": [
+    "alert-dialog",
+    "button"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/delete-button/delete-button.tsx",
+      "content": "import {\n  AlertDialog,\n  AlertDialogAction,\n  AlertDialogCancel,\n  AlertDialogContent,\n  AlertDialogDescription,\n  AlertDialogFooter,\n  AlertDialogHeader,\n  AlertDialogTitle,\n  AlertDialogTrigger,\n} from \"@/components/ui/alert-dialog\";\nimport { Button } from \"@/components/ui/button\";\nimport { TrashIcon } from \"@phosphor-icons/react/dist/ssr\";\n\ntype DeleteButtonProps = {\n  iconOnly?: boolean;\n  size?: React.ComponentProps<typeof Button>[\"size\"];\n  title?: React.ReactNode;\n  description?: React.ReactNode;\n  deleteText?: React.ReactNode;\n  cancelText?: React.ReactNode;\n};\n\nexport default function DeleteButton({\n  iconOnly = false,\n  size,\n  title = \"Are you sure?\",\n  description = \"This action permanently deletes the link and its associated data. If you may need it later, consider disabling the link instead.\",\n  deleteText = \"Delete\",\n  cancelText = \"Cancel\",\n}: DeleteButtonProps) {\n  return (\n    <AlertDialog>\n      <AlertDialogTrigger asChild>\n        <Button\n          variant={\"destructive\"}\n          size={size ?? (iconOnly ? \"icon\" : \"default\")}\n          aria-label=\"Delete\"\n        >\n          <TrashIcon />\n          {!iconOnly ? \"Delete\" : null}\n        </Button>\n      </AlertDialogTrigger>\n      <AlertDialogContent size=\"sm\">\n        <AlertDialogHeader>\n          <AlertDialogTitle>{title}</AlertDialogTitle>\n          <AlertDialogDescription>{description}</AlertDialogDescription>\n        </AlertDialogHeader>\n        <AlertDialogFooter>\n          <AlertDialogCancel>{cancelText}</AlertDialogCancel>\n          <AlertDialogAction variant={\"destructive\"}>\n            {deleteText}\n          </AlertDialogAction>\n        </AlertDialogFooter>\n      </AlertDialogContent>\n    </AlertDialog>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "type": "registry:component"
+}

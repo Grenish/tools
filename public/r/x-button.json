@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "x-button",
+  "title": "X Button",
+  "description": "An X (Twitter) sign-in/continue button with icon-only and full-text variants, tooltip support, and multiple sizes.",
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "registryDependencies": [
+    "button",
+    "tooltip"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/x-button/x-button.tsx",
+      "content": "\"use client\";\n\nimport { XLogoIcon } from \"@phosphor-icons/react/dist/ssr\";\nimport { Button } from \"@/components/ui/button\";\nimport {\n  Tooltip,\n  TooltipContent,\n  TooltipProvider,\n  TooltipTrigger,\n} from \"@/components/ui/tooltip\";\nimport { cn } from \"@/lib/utils\";\nimport * as React from \"react\";\n\n// Types\n\ntype XButtonSize =\n  | \"sm\"\n  | \"default\"\n  | \"lg\"\n  | \"icon-xs\"\n  | \"icon-sm\"\n  | \"icon\"\n  | \"icon-lg\";\n\nexport interface XButtonProps extends React.ComponentProps<typeof Button> {\n  size?: XButtonSize;\n  tooltipText?: string;\n}\n\n// Config\n\nconst iconSizeClass: Record<XButtonSize, string> = {\n  sm: \"size-3.5\",\n  default: \"size-4\",\n  lg: \"size-5\",\n  \"icon-xs\": \"size-3\",\n  \"icon-sm\": \"size-3.5\",\n  icon: \"size-4\",\n  \"icon-lg\": \"size-5\",\n};\n\nconst ICON_SIZES: XButtonSize[] = [\n  \"icon-xs\",\n  \"icon-sm\",\n  \"icon\",\n  \"icon-lg\",\n];\n\n// Component\n\nexport default function XButton({\n  className,\n  variant = \"outline\",\n  size = \"default\",\n  tooltipText = \"X\",\n  type = \"button\",\n  children,\n  ...props\n}: XButtonProps) {\n  const isIcon = ICON_SIZES.includes(size);\n  const iconClass = iconSizeClass[size];\n\n  const button = (\n    <Button\n      variant={variant}\n      size={size}\n      type={type}\n      className={cn(className)}\n      {...props}\n    >\n      <XLogoIcon weight=\"duotone\" className={cn(iconClass, !isIcon && \"mr-2\")} />\n      {!isIcon && (children ?? <span>Continue with X</span>)}\n    </Button>\n  );\n\n  if (!isIcon) return button;\n\n  return (\n    <TooltipProvider>\n      <Tooltip>\n        <TooltipTrigger asChild>{button}</TooltipTrigger>\n        <TooltipContent>\n          <p>{tooltipText}</p>\n        </TooltipContent>\n      </Tooltip>\n    </TooltipProvider>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "google-button",
+  "title": "Google Button",
+  "description": "A Google sign-in/continue button with icon-only and full-text variants, tooltip support, and multiple sizes.",
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "registryDependencies": [
+    "button",
+    "tooltip"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/google-button/google-button.tsx",
+      "content": "\"use client\";\n\nimport { Button } from \"@/components/ui/button\";\nimport {\n  Tooltip,\n  TooltipContent,\n  TooltipProvider,\n  TooltipTrigger,\n} from \"@/components/ui/tooltip\";\nimport { cn } from \"@/lib/utils\";\nimport { GoogleLogoIcon } from \"@phosphor-icons/react/dist/ssr\";\nimport * as React from \"react\";\n\n// Types\n\ntype GoogleButtonSize =\n  | \"sm\"\n  | \"default\"\n  | \"lg\"\n  | \"icon-xs\"\n  | \"icon-sm\"\n  | \"icon\"\n  | \"icon-lg\";\n\nexport interface GoogleButtonProps extends React.ComponentProps<typeof Button> {\n  size?: GoogleButtonSize;\n  tooltipText?: string;\n}\n\n// Config\n\nconst iconSizeClass: Record<GoogleButtonSize, string> = {\n  sm: \"size-3.5\",\n  default: \"size-4\",\n  lg: \"size-5\",\n  \"icon-xs\": \"size-3\",\n  \"icon-sm\": \"size-3.5\",\n  icon: \"size-4\",\n  \"icon-lg\": \"size-5\",\n};\n\nconst ICON_SIZES: GoogleButtonSize[] = [\n  \"icon-xs\",\n  \"icon-sm\",\n  \"icon\",\n  \"icon-lg\",\n];\n\n// Component\n\nexport function GoogleButton({\n  className,\n  variant = \"outline\",\n  size = \"default\",\n  tooltipText = \"Google\",\n  type = \"button\",\n  children,\n  ...props\n}: GoogleButtonProps) {\n  const isIcon = ICON_SIZES.includes(size);\n  const iconClass = iconSizeClass[size];\n\n  const button = (\n    <Button\n      variant={variant}\n      size={size}\n      type={type}\n      className={cn(className)}\n      {...props}\n    >\n      <GoogleLogoIcon\n        weight=\"duotone\"\n        className={cn(iconClass, !isIcon && \"mr-2\")}\n      />\n      {!isIcon && (children ?? <span>Continue with Google</span>)}\n    </Button>\n  );\n\n  if (!isIcon) return button;\n\n  return (\n    <TooltipProvider>\n      <Tooltip>\n        <TooltipTrigger asChild>{button}</TooltipTrigger>\n        <TooltipContent>\n          <p>{tooltipText}</p>\n        </TooltipContent>\n      </Tooltip>\n    </TooltipProvider>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "type": "registry:component"
+}
