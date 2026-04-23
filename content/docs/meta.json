@@ -1,3 +1,11 @@
 {
-  "pages": ["index", "installation", "components", "blocks"]
+  "pages": [
+    "---Getting Started---",
+    "index",
+    "installation",
+    "---Components---",
+    "...components",
+    "---Blocks---",
+    "...blocks"
+  ]
 }

@@ -1,6 +1,6 @@
 {
-  "title": "Components",
   "pages": [
+    "index",
     "delete-button",
     "editor",
     "google-button",

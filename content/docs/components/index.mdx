@@ -1,0 +1,58 @@
+---
+title: Components
+description: A collection of beautiful, accessible, and installable components.
+---
+
+Browse the available components below. All components are installable via the `@grenish` shadcn registry — see the [installation guide](/docs/installation) for one-time setup.
+
+## Quick Install
+
+```npm
+npx shadcn@latest add @grenish/<component-name>
+```
+
+## Components
+
+Individual, reusable UI components that can be composed into larger interfaces.
+
+<Cards>
+  <Card title="Google Button" href="/docs/components/google-button" />
+  <Card title="X Button" href="/docs/components/x-button" />
+  <Card title="Delete Button" href="/docs/components/delete-button" />
+  <Card title="View Password" href="/docs/components/view-password-button" />
+  <Card title="Tweet Card" href="/docs/components/tweet-card" />
+  <Card title="Instagram Card" href="/docs/components/instagram-card" />
+  <Card title="Editor" href="/docs/components/editor" />
+</Cards>
+
+## Blocks
+
+Complete, multi-component compositions that form full page sections or flows.
+
+<Cards>
+  <Card title="Signin Form" href="/docs/blocks/signin-form" />
+  <Card title="Signup Form" href="/docs/blocks/signup-form" />
+  <Card title="Reset Password" href="/docs/blocks/reset-password" />
+</Cards>
+
+## Anatomy
+
+Components are built using Tailwind CSS for styling and React for functionality. They are designed to be accessible and customizable. Each component ships as a self-contained file (or set of files for blocks) that gets placed in your project's component directory.
+
+```tsx title="Example: Using a registry component"
+import { GoogleButton } from "@/components/tools/google-button"
+import TweetCard from "@/components/tools/tweet-card"
+
+export default function Demo() {
+  return (
+    <div className="space-y-4">
+      <GoogleButton onClick={() => handleAuth()} />
+      <TweetCard
+        profileName="Grenish Rai"
+        tweet="Just shipped an amazing new feature! 🚀"
+        likes={2000}
+      />
+    </div>
+  )
+}
+```
