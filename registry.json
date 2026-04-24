@@ -206,6 +206,34 @@
           "type": "registry:lib"
         }
       ]
+    },
+    {
+      "name": "horizontal-stripes",
+      "type": "registry:component",
+      "title": "Horizontal Stripes",
+      "description": "A decorative horizontal stripe pattern using CSS repeating gradients and a --pattern CSS variable.",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/new-york/horizontal-stripes/horizontal-stripes.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "vertical-stripes",
+      "type": "registry:component",
+      "title": "Vertical Stripes",
+      "description": "A decorative vertical stripe pattern using CSS repeating gradients and a --pattern CSS variable.",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/new-york/vertical-stripes/vertical-stripes.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }
