@@ -61,13 +61,7 @@ export default function XButton({
   const iconClass = iconSizeClass[size];
 
   const button = (
-    <Button
-      variant={variant}
-      size={size}
-      type={type}
-      className={cn(className)}
-      {...props}
-    >
+    <Button variant={variant} size={size} type={type} className={cn(className)} {...props}>
       <XLogoIcon weight="duotone" className={cn(iconClass, !isIcon && "mr-2")} />
       {!isIcon && (children ?? <span>Continue with X</span>)}
     </Button>

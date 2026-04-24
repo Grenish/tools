@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "horizontal-stripes",
+  "title": "Horizontal Stripes",
+  "description": "A decorative horizontal stripe pattern using CSS repeating gradients and a --pattern CSS variable.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/new-york/horizontal-stripes/horizontal-stripes.tsx",
+      "content": "import { cn } from \"@/lib/utils\";\n\ntype StripesProps = {\n  className?: string;\n};\n\nexport default function HorizontalStripes({ className }: StripesProps) {\n  return (\n    <div\n      className={cn(\n        \"h-10 w-full bg-[repeating-linear-gradient(-45deg,var(--pattern)_0,var(--pattern)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px]\",\n        `${className}`,\n      )}\n    />\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "type": "registry:component"
+}

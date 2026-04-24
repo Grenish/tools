@@ -1,0 +1,32 @@
+---
+title: Changelog
+description: Latest changes, updates and announcements.
+---
+
+### 23 April, 2026 – shadcn CLI Update
+
+Components can now be installed directly using the shadcn CLI with support for custom registries.
+
+All components are available via the `@grenish` registry. To configure it, add the following to your `components.json`:
+
+```json
+{
+  "registries": {
+    "@grenish": {
+      "url": "https://tools.vercel.app/r"
+    }
+  }
+}
+```
+
+Once configured, install components using the CLI:
+
+```bash
+npx shadcn@latest add @grenish/[component]
+```
+
+**Example:**
+
+```bash
+npx shadcn@latest add @grenish/delete-button
+```

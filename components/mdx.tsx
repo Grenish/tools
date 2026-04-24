@@ -22,6 +22,10 @@ import { TypeTable } from "./type-table";
 import { File, Folder, Files } from "fumadocs-ui/components/files";
 import { CodeBlock, Pre } from "fumadocs-ui/components/codeblock";
 import { CodeViewer } from "./ui/code-viewer";
+import { TrackedCodeBlock } from "./analytics/tracked-code-block";
+import HorizontalStripes from "./horizontal-stripes";
+import VerticalStripes from "./vertical-stripes";
+
 export function getMDXComponents(components?: MDXComponents) {
   return {
     ...defaultMdxComponents,
@@ -45,10 +49,14 @@ export function getMDXComponents(components?: MDXComponents) {
     Folder,
     Files,
     CodeViewer,
+    HorizontalStripes,
+    VerticalStripes,
     pre: ({ ref: _ref, ...props }) => (
-      <CodeBlock {...props}>
-        <Pre>{props.children}</Pre>
-      </CodeBlock>
+      <TrackedCodeBlock>
+        <CodeBlock {...props}>
+          <Pre>{props.children}</Pre>
+        </CodeBlock>
+      </TrackedCodeBlock>
     ),
     ...TabsComponents,
     ...components,

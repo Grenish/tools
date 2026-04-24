@@ -15,7 +15,7 @@ export default function MainEditor() {
   const [isPreviewMode, setIsPreviewMode] = useState(false);
 
   const togglePreviewMode = () => {
-    setIsPreviewMode(!isPreviewMode);
+    setIsPreviewMode((prev) => !prev);
   };
 
   return (

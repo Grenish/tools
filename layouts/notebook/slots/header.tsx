@@ -1,5 +1,5 @@
-'use client';
-import { ChevronDown, Languages, Sidebar as SidebarIcon } from 'lucide-react';
+"use client";
+import { ChevronDown, Languages, Sidebar as SidebarIcon } from "lucide-react";
 import {
   Fragment,
   type HTMLAttributes,
@@ -8,17 +8,21 @@ import {
   useRef,
   useState,
   type ComponentProps,
-} from 'react';
-import { buttonVariants } from '../../../components/ui/button';
-import { cn } from '../../../lib/cn';
-import { LinkItem, type LinkItemType, type MenuItemType } from '../../shared';
-import { useNotebookLayout } from '../client';
-import { type LayoutTab, isLayoutTabActive } from '../../shared';
-import { Popover, PopoverTrigger, PopoverContent } from '../../../components/ui/popover';
-import { usePathname } from 'fumadocs-core/framework';
-import Link from 'fumadocs-core/link';
+} from "react";
+import { buttonVariants } from "../../../components/ui/button";
+import { cn } from "../../../lib/cn";
+import { LinkItem, type LinkItemType, type MenuItemType } from "../../shared";
+import { useNotebookLayout } from "../client";
+import { type LayoutTab, isLayoutTabActive } from "../../shared";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "../../../components/ui/popover";
+import { usePathname } from "fumadocs-core/framework";
+import Link from "fumadocs-core/link";
 
-export function Header(props: ComponentProps<'header'>) {
+export function Header(props: ComponentProps<"header">) {
   const {
     slots,
     navItems,
@@ -26,9 +30,9 @@ export function Header(props: ComponentProps<'header'>) {
     props: { tabMode, nav, tabs, sidebar },
   } = useNotebookLayout();
   const { open } = slots.sidebar?.useSidebar?.() ?? {};
-  const navMode = nav?.mode ?? 'auto';
+  const navMode = nav?.mode ?? "auto";
   const sidebarCollapsible = sidebar.collapsible ?? true;
-  const showLayoutTabs = tabMode === 'navbar' && tabs.length > 0;
+  const showLayoutTabs = tabMode === "navbar" && tabs.length > 0;
 
   if (nav?.component) return nav.component;
 
@@ -38,27 +42,31 @@ export function Header(props: ComponentProps<'header'>) {
       data-transparent={isNavTransparent && !open}
       {...props}
       className={cn(
-        'sticky [grid-area:header] flex flex-col top-(--fd-docs-row-1) z-10 backdrop-blur-sm transition-colors data-[transparent=false]:bg-fd-background/80 layout:[--fd-header-height:--spacing(14)]',
-        showLayoutTabs && 'lg:layout:[--fd-header-height:--spacing(24)]',
+        "sticky [grid-area:header] flex flex-col top-(--fd-docs-row-1) z-10 backdrop-blur-sm transition-colors data-[transparent=false]:bg-fd-background/80 layout:[--fd-header-height:--spacing(14)]",
+        showLayoutTabs && "lg:layout:[--fd-header-height:--spacing(24)]",
         props.className,
       )}
     >
-      <div data-header-body="" className="flex border-b px-4 gap-2 h-14 md:px-6">
+      <div
+        data-header-body=""
+        className="flex border-b px-4 gap-2 h-14 md:px-6"
+      >
         <div
           className={cn(
-            'items-center',
-            navMode === 'top' && 'flex flex-1',
-            navMode === 'auto' && 'hidden has-data-[collapsed=true]:md:flex max-md:flex',
+            "items-center",
+            navMode === "top" && "flex flex-1",
+            navMode === "auto" &&
+              "hidden has-data-[collapsed=true]:md:flex max-md:flex",
           )}
         >
-          {sidebarCollapsible && slots.sidebar && navMode === 'auto' && (
+          {sidebarCollapsible && slots.sidebar && navMode === "auto" && (
             <slots.sidebar.collapseTrigger
               className={cn(
                 buttonVariants({
-                  color: 'ghost',
-                  size: 'icon-sm',
+                  variant: "ghost",
+                  size: "icon-sm",
                 }),
-                '-ms-1.5 text-fd-muted-foreground data-[collapsed=false]:hidden max-md:hidden',
+                "-ms-1.5 text-fd-muted-foreground data-[collapsed=false]:hidden max-md:hidden",
               )}
             >
               <SidebarIcon />
@@ -67,8 +75,8 @@ export function Header(props: ComponentProps<'header'>) {
           {slots.navTitle && (
             <slots.navTitle
               className={cn(
-                'inline-flex items-center gap-2.5 font-semibold',
-                navMode === 'auto' && 'md:hidden',
+                "inline-flex items-center gap-2.5 font-semibold",
+                navMode === "auto" && "md:hidden",
               )}
             />
           )}
@@ -78,28 +86,30 @@ export function Header(props: ComponentProps<'header'>) {
           <slots.searchTrigger.full
             hideIfDisabled
             className={cn(
-              'w-full my-auto max-md:hidden',
-              navMode === 'top' ? 'ps-2.5 rounded-xl max-w-sm' : 'max-w-[240px]',
+              "w-full my-auto max-md:hidden",
+              navMode === "top"
+                ? "ps-2.5 rounded-xl max-w-sm"
+                : "max-w-[240px]",
             )}
           />
         )}
         <div className="flex flex-1 items-center justify-end md:gap-2">
           <div className="flex items-center gap-6 empty:hidden max-lg:hidden">
             {navItems
-              .filter((item) => item.type !== 'icon')
+              .filter((item) => item.type !== "icon")
               .map((item, i) => (
                 <NavbarLinkItem key={i} item={item} />
               ))}
           </div>
           {navItems
-            .filter((item) => item.type === 'icon')
+            .filter((item) => item.type === "icon")
             .map((item, i) => (
               <LinkItem
                 key={i}
                 item={item}
                 className={cn(
-                  buttonVariants({ size: 'icon-sm', color: 'ghost' }),
-                  'text-fd-muted-foreground max-lg:hidden',
+                  buttonVariants({ size: "icon-sm", variant: "ghost" }),
+                  "text-fd-muted-foreground max-lg:hidden",
                 )}
                 aria-label={item.label}
               >
@@ -108,14 +118,16 @@ export function Header(props: ComponentProps<'header'>) {
             ))}
 
           <div className="flex items-center md:hidden">
-            {slots.searchTrigger && <slots.searchTrigger.sm hideIfDisabled className="p-2" />}
+            {slots.searchTrigger && (
+              <slots.searchTrigger.sm hideIfDisabled className="p-2" />
+            )}
             {slots.sidebar && (
               <slots.sidebar.trigger
                 className={cn(
                   buttonVariants({
-                    color: 'ghost',
-                    size: 'icon-sm',
-                    className: 'p-2 -me-1.5',
+                    variant: "ghost",
+                    size: "icon-sm",
+                    className: "p-2 -me-1.5",
                   }),
                 )}
               >
@@ -131,14 +143,14 @@ export function Header(props: ComponentProps<'header'>) {
               </slots.languageSelect.root>
             )}
             {slots.themeSwitch && <slots.themeSwitch />}
-            {sidebarCollapsible && slots.sidebar && navMode === 'top' && (
+            {sidebarCollapsible && slots.sidebar && navMode === "top" && (
               <slots.sidebar.collapseTrigger
                 className={cn(
                   buttonVariants({
-                    color: 'secondary',
-                    size: 'icon-sm',
+                    variant: "secondary",
+                    size: "icon-sm",
                   }),
-                  'text-fd-muted-foreground rounded-full -me-1.5',
+                  "text-fd-muted-foreground rounded-full -me-1.5",
                 )}
               >
                 <SidebarIcon />
@@ -162,7 +174,7 @@ function LayoutHeaderTabs({
   tabs,
   className,
   ...props
-}: ComponentProps<'div'> & {
+}: ComponentProps<"div"> & {
   tabs: LayoutTab[];
 }) {
   const pathname = usePathname();
@@ -171,9 +183,14 @@ function LayoutHeaderTabs({
   }, [tabs, pathname]);
 
   return (
-    <div className={cn('flex flex-row items-end gap-6', className)} {...props}>
+    <div className={cn("flex flex-row items-end gap-6", className)} {...props}>
       {tabs.map((option, i) => {
-        const { title, url, unlisted, props: { className, ...rest } = {} } = option;
+        const {
+          title,
+          url,
+          unlisted,
+          props: { className, ...rest } = {},
+        } = option;
         const isSelected = selectedIdx === i;
 
         return (
@@ -181,9 +198,9 @@ function LayoutHeaderTabs({
             key={i}
             href={url}
             className={cn(
-              'inline-flex border-b-2 border-transparent transition-colors items-center pb-1.5 font-medium gap-2 text-fd-muted-foreground text-sm text-nowrap hover:text-fd-accent-foreground',
-              unlisted && !isSelected && 'hidden',
-              isSelected && 'border-fd-primary text-fd-primary',
+              "inline-flex border-b-2 border-transparent transition-colors items-center pb-1.5 font-medium gap-2 text-fd-muted-foreground text-sm text-nowrap hover:text-fd-accent-foreground",
+              unlisted && !isSelected && "hidden",
+              isSelected && "border-fd-primary text-fd-primary",
               className,
             )}
             {...rest}
@@ -201,9 +218,9 @@ function NavbarLinkItem({
   className,
   ...props
 }: { item: LinkItemType } & HTMLAttributes<HTMLElement>) {
-  if (item.type === 'custom') return item.children;
+  if (item.type === "custom") return item.children;
 
-  if (item.type === 'menu') {
+  if (item.type === "menu") {
     return <NavbarLinkItemMenu item={item} className={className} {...props} />;
   }
 
@@ -211,7 +228,7 @@ function NavbarLinkItem({
     <LinkItem
       item={item}
       className={cn(
-        'text-sm text-fd-muted-foreground transition-colors hover:text-fd-accent-foreground data-[active=true]:text-fd-primary',
+        "text-sm text-fd-muted-foreground transition-colors hover:text-fd-accent-foreground data-[active=true]:text-fd-primary",
         className,
       )}
       {...props}
@@ -243,34 +260,39 @@ function NavbarLinkItemMenu({
     }, hoverDelay);
   };
   const onPointerEnter = (e: PointerEvent) => {
-    if (e.pointerType === 'touch') return;
+    if (e.pointerType === "touch") return;
     delaySetOpen(true);
   };
   const onPointerLeave = (e: PointerEvent) => {
-    if (e.pointerType === 'touch') return;
+    if (e.pointerType === "touch") return;
     delaySetOpen(false);
   };
   function isTouchDevice() {
-    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    return "ontouchstart" in window || navigator.maxTouchPoints > 0;
   }
 
   return (
     <Popover
       open={open}
       onOpenChange={(value) => {
-        if (freezeUntil.current === null || Date.now() >= freezeUntil.current) setOpen(value);
+        if (freezeUntil.current === null || Date.now() >= freezeUntil.current)
+          setOpen(value);
       }}
     >
       <PopoverTrigger
         className={cn(
-          'inline-flex items-center gap-1.5 p-1 text-sm text-fd-muted-foreground transition-colors has-data-[active=true]:text-fd-primary data-[state=open]:text-fd-accent-foreground focus-visible:outline-none',
+          "inline-flex items-center gap-1.5 p-1 text-sm text-fd-muted-foreground transition-colors has-data-[active=true]:text-fd-primary data-[state=open]:text-fd-accent-foreground focus-visible:outline-none",
           className,
         )}
         onPointerEnter={onPointerEnter}
         onPointerLeave={onPointerLeave}
         {...props}
       >
-        {item.url ? <LinkItem item={item as never}>{item.text}</LinkItem> : item.text}
+        {item.url ? (
+          <LinkItem item={item as never}>{item.text}</LinkItem>
+        ) : (
+          item.text
+        )}
         <ChevronDown className="size-3" />
       </PopoverTrigger>
       <PopoverContent
@@ -279,7 +301,8 @@ function NavbarLinkItemMenu({
         onPointerLeave={onPointerLeave}
       >
         {item.items.map((child, i) => {
-          if (child.type === 'custom') return <Fragment key={i}>{child.children}</Fragment>;
+          if (child.type === "custom")
+            return <Fragment key={i}>{child.children}</Fragment>;
 
           return (
             <LinkItem

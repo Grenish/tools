@@ -1,0 +1,239 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "grenish",
+  "homepage": "https://tools.grenish.dev",
+  "items": [
+    {
+      "name": "tweet-card",
+      "type": "registry:block",
+      "title": "Tweet Card",
+      "description": "A responsive tweet/X post card with multi-size support (sm, md, lg, xl), media grids, and engagement stats.",
+      "registryDependencies": ["avatar", "button", "card", "item"],
+      "dependencies": ["@phosphor-icons/react", "next"],
+      "files": [
+        {
+          "path": "registry/new-york/tweet-card/tweet-card.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "instagram-card",
+      "type": "registry:block",
+      "title": "Instagram Card",
+      "description": "A responsive Instagram-style post card with multi-size support, photo grid layouts (1-4 photos), and profile info.",
+      "registryDependencies": ["avatar", "button", "card", "item"],
+      "dependencies": ["@phosphor-icons/react", "next"],
+      "files": [
+        {
+          "path": "registry/new-york/instagram-card/instagram-card.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "google-button",
+      "type": "registry:component",
+      "title": "Google Button",
+      "description": "A Google sign-in/continue button with icon-only and full-text variants, tooltip support, and multiple sizes.",
+      "registryDependencies": ["button", "tooltip"],
+      "dependencies": ["@phosphor-icons/react"],
+      "files": [
+        {
+          "path": "registry/new-york/google-button/google-button.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "x-button",
+      "type": "registry:component",
+      "title": "X Button",
+      "description": "An X (Twitter) sign-in/continue button with icon-only and full-text variants, tooltip support, and multiple sizes.",
+      "registryDependencies": ["button", "tooltip"],
+      "dependencies": ["@phosphor-icons/react"],
+      "files": [
+        {
+          "path": "registry/new-york/x-button/x-button.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "delete-button",
+      "type": "registry:component",
+      "title": "Delete Button",
+      "description": "A destructive delete button with a built-in confirmation dialog. Supports icon-only mode and customizable text.",
+      "registryDependencies": ["alert-dialog", "button"],
+      "dependencies": ["@phosphor-icons/react"],
+      "files": [
+        {
+          "path": "registry/new-york/delete-button/delete-button.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "view-password",
+      "type": "registry:component",
+      "title": "View Password",
+      "description": "A password visibility toggle button that integrates with input groups to show/hide password fields.",
+      "registryDependencies": ["input-group"],
+      "dependencies": ["@phosphor-icons/react"],
+      "files": [
+        {
+          "path": "registry/new-york/view-password/view-password.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "signin-form",
+      "type": "registry:block",
+      "title": "Sign In Form",
+      "description": "A complete sign-in form block with username/password fields, password visibility toggle, and social login buttons (Google, X).",
+      "registryDependencies": ["button", "field", "input-group"],
+      "dependencies": ["@phosphor-icons/react"],
+      "files": [
+        {
+          "path": "registry/new-york/signin-form/signin-form.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/signin-form/view-password.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/signin-form/google-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/signin-form/x-button.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "signup-form",
+      "type": "registry:block",
+      "title": "Sign Up Form",
+      "description": "A complete sign-up form block with name, username, email, password fields, password visibility toggle, and social login buttons.",
+      "registryDependencies": ["button", "field", "input-group"],
+      "dependencies": ["@phosphor-icons/react"],
+      "files": [
+        {
+          "path": "registry/new-york/signup-form/signup-form.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/signup-form/view-password.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/signup-form/google-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/signup-form/x-button.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "reset-password",
+      "type": "registry:block",
+      "title": "Reset Password Form",
+      "description": "A reset password form block with new password and confirm password fields with visibility toggles.",
+      "registryDependencies": ["button", "field", "input-group"],
+      "dependencies": ["@phosphor-icons/react"],
+      "files": [
+        {
+          "path": "registry/new-york/reset-password/reset-password.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/reset-password/view-password.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "editor",
+      "type": "registry:block",
+      "title": "Rich Text Editor",
+      "description": "A rich text editor block with formatting toolbar (bold, italic, underline, headings, lists), font selector, undo/redo, link/image insertion, and preview mode.",
+      "registryDependencies": ["button", "button-group", "card", "dialog", "input-group", "select", "toggle-group", "tooltip", "alert-dialog"],
+      "dependencies": ["@phosphor-icons/react"],
+      "files": [
+        {
+          "path": "registry/new-york/editor/editor.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/editor/editor-body.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/editor/toolbar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/editor/delete-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/editor/link-prompt.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/editor/use-editor-state.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "registry/new-york/editor/use-text-formatting.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "registry/new-york/editor/fonts.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/new-york/editor/formatting.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/new-york/editor/types.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "horizontal-stripes",
+      "type": "registry:component",
+      "title": "Horizontal Stripes",
+      "description": "A decorative horizontal stripe pattern using CSS repeating gradients and a --pattern CSS variable.",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/new-york/horizontal-stripes/horizontal-stripes.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "vertical-stripes",
+      "type": "registry:component",
+      "title": "Vertical Stripes",
+      "description": "A decorative vertical stripe pattern using CSS repeating gradients and a --pattern CSS variable.",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/new-york/vertical-stripes/vertical-stripes.tsx",
+          "type": "registry:component"
+        }
+      ]
+    }
+  ]
+}

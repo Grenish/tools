@@ -9,16 +9,36 @@ description: How to install dependencies and structure your app.
 
 Ensure you have a project set up with shadcn/ui. If not, follow the [shadcn/ui installation guide](https://ui.shadcn.com/docs/installation) to get started.
 
-## Installing Dependencies
+## Install via Registry (Recommended)
 
-For icons, install the following package:
+All components are available through the `@grenish` shadcn registry. Add the registry to your `components.json`:
+
+```json title="components.json"
+{
+  "registries": {
+    "@grenish": {
+      "url": "https://tools.grenish.dev/r"
+    }
+  }
+}
+```
+
+Then install any component with the shadcn CLI:
+
+```npm
+npx shadcn@latest add @grenish/tweet-card
+npx shadcn@latest add @grenish/editor
+npx shadcn@latest add @grenish/signin-form
+```
+
+This automatically handles all dependencies, base components, and file placement.
+
+## Manual Installation
+
+If you prefer manual setup, install the icon dependency:
 
 ```npm
 npm install @phosphor-icons/react
 ```
 
-For other components, refer to the shadcn/ui documentation to add the required base components. You can copy and paste the necessary code from their examples.
-
-<Callout type="info">
-  We're actively developing a CLI tool to integrate seamlessly with your shadcn/ui setup via registries, making installation more streamlined in the future.
-</Callout>
+Then install the required shadcn base components for each item (listed on individual component pages) and copy the source code manually.

@@ -1,3 +1,14 @@
 {
-  "pages": ["index", "installation", "components", "blocks"]
+  "pages": [
+    "---Getting Started---",
+    "index",
+    "installation",
+    "changelog",
+    "---Tracking & Cookies---",
+    "tracking",
+    "---Components---",
+    "...components",
+    "---Blocks---",
+    "...blocks"
+  ]
 }
