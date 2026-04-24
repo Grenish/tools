@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "grenish",
-  "homepage": "https://tools.grenish.dev",
+  "homepage": "https://tools-grenish.vercel.app",
   "items": [
     {
       "name": "tweet-card",

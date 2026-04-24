@@ -10,7 +10,7 @@ Add the registry to your `components.json`:
 {
   "registries": {
     "@grenish": {
-      "url": "https://tools.grenish.dev/r"
+      "url": "https://tools-grenish.vercel.app/r"
     }
   }
 }
@@ -62,7 +62,7 @@ npx shadcn@latest add @grenish/tweet-card
 
 ## Documentation
 
-Visit [tools.grenish.dev](https://tools.grenish.dev) for full documentation, live previews, and usage examples.
+Visit [tools-grenish.vercel.app](https://tools-grenish.vercel.app) for full documentation, live previews, and usage examples.
 
 ## License
 
