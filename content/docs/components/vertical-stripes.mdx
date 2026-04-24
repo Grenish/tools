@@ -1,0 +1,103 @@
+---
+title: Vertical Stripes
+description: A decorative vertical stripe pattern component using CSS repeating gradients.
+---
+
+A lightweight decorative component that renders a diagonal stripe pattern along the full height. Uses a `--pattern` CSS custom property for color, making it fully themeable.
+
+<Preview>
+  <div className="h-70">
+    <VerticalStripes />
+  </div>
+</Preview>
+
+## Installation
+
+```npm
+npx shadcn@latest add @grenish/vertical-stripes
+```
+
+<Callout type="info">
+  This requires the `@grenish` registry in your `components.json`. See the
+  [installation guide](/docs/installation) for setup.
+</Callout>
+
+## Usage
+
+<Tabs items={['Usage', 'Code']}>
+  <Tab value="Usage">
+    ```tsx
+    import VerticalStripes from "@/components/tools/vertical-stripes"
+
+    export default function Example() {
+      return (
+        <div className="h-64">
+          <VerticalStripes />
+        </div>
+      )
+    }
+    ```
+
+  </Tab>
+  <Tab value="Code">
+    ```tsx
+    import { cn } from "@/lib/utils";
+
+    type StripesProps = {
+      className?: string;
+    };
+
+    export default function VerticalStripes({ className }: StripesProps) {
+      return (
+        <div
+          className={cn(
+            "h-full w-10 bg-[repeating-linear-gradient(45deg,var(--pattern)_0,var(--pattern)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px]",
+            `${className}`,
+          )}
+        />
+      );
+    }
+    ```
+
+  </Tab>
+</Tabs>
+
+## Features
+
+- **CSS-only pattern** — No images or SVGs, purely CSS repeating gradients.
+- **Themeable** — Uses `--pattern` CSS variable for stripe color, adapts to any theme.
+- **Customizable** — Override dimensions, colors, and spacing via `className`.
+- **Lightweight** — Zero dependencies beyond `cn` utility.
+
+## Props
+
+| Prop        | Type     | Default | Description                      |
+| ----------- | -------- | ------- | -------------------------------- |
+| `className` | `string` | —       | Additional CSS classes to apply. |
+
+## CSS Variable
+
+The component uses the `--pattern` CSS custom property for the stripe color. Define it in your CSS:
+
+```css
+:root {
+  --pattern: hsl(var(--border));
+}
+```
+
+## Examples
+
+### Custom width and color
+
+```tsx
+<VerticalStripes className="w-20 [--pattern:hsl(var(--primary))]" />
+```
+
+### As a sidebar accent
+
+```tsx
+<div className="flex h-screen">
+  <VerticalStripes className="w-4" />
+  <main className="flex-1 p-8">Main content</main>
+</div>
+```
