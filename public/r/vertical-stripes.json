@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vertical-stripes",
+  "title": "Vertical Stripes",
+  "description": "A decorative vertical stripe pattern using CSS repeating gradients and a --pattern CSS variable.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/new-york/vertical-stripes/vertical-stripes.tsx",
+      "content": "import { cn } from \"@/lib/utils\";\n\ntype StripesProps = {\n  className?: string;\n};\n\nexport default function VerticalStripes({ className }: StripesProps) {\n  return (\n    <div\n      className={cn(\n        \"h-full w-10 bg-[repeating-linear-gradient(45deg,var(--pattern)_0,var(--pattern)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px]\",\n        `${className}`,\n      )}\n    />\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "type": "registry:component"
+}
