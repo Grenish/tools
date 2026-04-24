@@ -1,47 +1,69 @@
-# .
+# Tools
 
-This is a Next.js application generated with
-[Create Fumadocs](https://github.com/fuma-nama/fumadocs).
+Beautifully crafted, accessible UI components and blocks built on top of [shadcn/ui](https://ui.shadcn.com). Installable via the shadcn CLI through the `@grenish` registry.
 
-It is a Next.js app with [Static Export](https://nextjs.org/docs/app/guides/static-exports) configured.
+## Quick Start
 
-Run development server:
+Add the registry to your `components.json`:
 
-```bash
-npm run dev
-# or
-pnpm dev
-# or
-yarn dev
+```json
+{
+  "registries": {
+    "@grenish": {
+      "url": "https://tools.grenish.dev/r"
+    }
+  }
+}
 ```
 
-Open http://localhost:3000 with your browser to see the result.
+Install any component:
 
-## Explore
+```bash
+npx shadcn@latest add @grenish/tweet-card
+```
 
-In the project, you can see:
+## Components
 
-- `lib/source.ts`: Code for content source adapter, [`loader()`](https://fumadocs.dev/docs/headless/source-api) provides the interface to access your content.
-- `lib/layout.shared.tsx`: Shared options for layouts, optional but preferred to keep.
+| Component            | Description                                                                                |
+| -------------------- | ------------------------------------------------------------------------------------------ |
+| `tweet-card`         | A responsive tweet/X post card with multi-size support, media grids, and engagement stats. |
+| `instagram-card`     | An Instagram-style post card with photo grid layouts and profile info.                     |
+| `google-button`      | A Google sign-in button with icon-only and full-text variants.                             |
+| `x-button`           | An X (Twitter) sign-in button with icon-only and full-text variants.                       |
+| `delete-button`      | A destructive action button with a built-in confirmation dialog.                           |
+| `view-password`      | A password input with an inline visibility toggle.                                         |
+| `horizontal-stripes` | A decorative horizontal stripe pattern using CSS repeating gradients.                      |
+| `vertical-stripes`   | A decorative vertical stripe pattern using CSS repeating gradients.                        |
+| `editor`             | A rich text editor with formatting toolbar, font selector, and preview mode.               |
 
-| Route                     | Description                                            |
-| ------------------------- | ------------------------------------------------------ |
-| `app/(home)`              | The route group for your landing page and other pages. |
-| `app/docs`                | The documentation layout and pages.                    |
-| `app/api/search/route.ts` | The Route Handler for search.                          |
+## Blocks
 
-### Fumadocs MDX
+| Block            | Description                                                      |
+| ---------------- | ---------------------------------------------------------------- |
+| `signin-form`    | A sign-in form with social login and password recovery.          |
+| `signup-form`    | A registration form with email, password, and social auth.       |
+| `reset-password` | A password reset flow with new password and confirmation fields. |
 
-A `source.config.ts` config file has been included, you can customise different options like frontmatter schema.
+### Project Structure
 
-Read the [Introduction](https://fumadocs.dev/docs/mdx) for further details.
+```
+├── app/
+│   ├── (home)/          Landing page
+│   └── docs/            Documentation layout and pages
+├── components/
+│   ├── tools/           Source components used in docs previews
+│   └── ui/              shadcn/ui base components
+├── content/docs/        MDX documentation files
+├── registry/
+│   └── new-york/        Registry source files (self-contained)
+├── public/r/            Generated registry JSON artifacts
+└── registry.json        Registry manifest
+```
 
-## Learn More
+## Documentation
 
-To learn more about Next.js and Fumadocs, take a look at the following
-resources:
+Visit [tools.grenish.dev](https://tools.grenish.dev) for full documentation, live previews, and usage examples.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [Fumadocs](https://fumadocs.dev) - learn about Fumadocs
+## License
+
+Open source.
