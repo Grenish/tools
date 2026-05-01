@@ -1,0 +1,164 @@
+---
+title: Dark Mode Button
+description: A theme toggle button for next-themes with icon and pill variants, hydration-safe rendering, and accessible labels.
+---
+
+A compact dark mode toggle built for `next-themes`. It waits until the component is mounted before rendering theme-dependent UI, preventing hydration mismatch while still supporting icon-only and labeled pill layouts.
+
+<Preview>
+  <div className="flex items-center gap-3">
+    <DarkModeButton />
+    <DarkModeButton variant="pill" />
+  </div>
+</Preview>
+
+## Installation
+
+```npm
+npx shadcn@latest add @grenish/darkmode-button
+```
+
+<Callout type="info">
+  This requires the `@grenish` registry in your `components.json`. See the [installation guide](/docs/installation) for setup.
+</Callout>
+
+### Manual Dependencies
+
+If you prefer manual installation, add the base component and install the theme dependency:
+
+```npm
+npx shadcn@latest add button
+npm install next-themes lucide-react
+```
+
+## Usage
+
+<Tabs items={['Usage', 'Code']}>
+<Tab value="Usage">
+
+```tsx
+import DarkModeButton from "@/components/tools/darkmode-buttons/darkmode-button-1"
+
+export default function Toolbar() {
+  return (
+    <div className="flex items-center gap-2">
+      <DarkModeButton />
+      <DarkModeButton variant="pill" />
+    </div>
+  )
+}
+```
+
+</Tab>
+<Tab value="Code">
+
+```tsx
+"use client";
+
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+import { Moon, Sun } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+interface DarkModeButtonProps {
+  variant?: "icon" | "pill";
+  className?: string;
+}
+
+export default function DarkModeButton({
+  variant = "icon",
+  className,
+}: DarkModeButtonProps) {
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) {
+    return (
+      <Button
+        variant="ghost"
+        size={variant === "icon" ? "icon" : "sm"}
+        className={cn("opacity-0", className)}
+        disabled
+        aria-hidden
+      />
+    );
+  }
+
+  const isDark = resolvedTheme === "dark";
+  const toggle = () => setTheme(isDark ? "light" : "dark");
+
+  if (variant === "pill") {
+    return (
+      <button
+        type="button"
+        onClick={toggle}
+        aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      >
+        {isDark ? <Sun /> : <Moon />}
+        {isDark ? "Light mode" : "Dark mode"}
+      </button>
+    );
+  }
+
+  return (
+    <Button variant="ghost" size="icon" onClick={toggle}>
+      <Sun className="dark:scale-0" />
+      <Moon className="absolute scale-0 dark:scale-100" />
+      <span className="sr-only">Toggle theme</span>
+    </Button>
+  );
+}
+```
+
+</Tab>
+</Tabs>
+
+## Props
+
+<TypeTable
+  type={{
+    variant: {
+      type: '"icon" | "pill"',
+      default: '"icon"',
+      description: "Controls whether the toggle renders as an icon button or labeled pill."
+    },
+    className: {
+      type: "string",
+      default: "undefined",
+      description: "Additional classes applied to the trigger."
+    }
+  }}
+/>
+
+## Examples
+
+### Icon Button
+
+<Preview>
+  <DarkModeButton />
+</Preview>
+
+```tsx
+<DarkModeButton />
+```
+
+### Pill Button
+
+<Preview>
+  <DarkModeButton variant="pill" />
+</Preview>
+
+```tsx
+<DarkModeButton variant="pill" />
+```
+
+## Features
+
+- Hydration-safe rendering for `next-themes`
+- Icon-only and labeled pill variants
+- Automatic light/dark icon switching
+- Accessible `aria-label` values for both states
+- Accepts `className` for local styling

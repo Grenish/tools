@@ -1,0 +1,343 @@
+---
+title: Comment
+description: A threaded comment component with voting, replies, editing, deletion, reporting, and mention highlighting.
+---
+
+A threaded comment component for discussion interfaces. It renders author metadata, relative timestamps, like and dislike actions, inline editing, reply boxes, collapsible nested replies, and ownership-aware menus.
+
+<Preview className="min-h-0">
+  <div className="w-full max-w-2xl rounded-lg border bg-background p-5">
+    <Comment
+      id="comment-1"
+      author={{
+        name: "Sarah Johnson",
+        username: "sarahjohnson",
+        initials: "SJ"
+      }}
+      content="This is a great implementation. @mikechen the nested replies feel clear without taking over the layout."
+      createdAt="2026-05-02T08:20:00.000Z"
+      likes={12}
+      dislikes={1}
+      replies={[
+        {
+          id: "comment-1-1",
+          author: {
+            name: "Mike Chen",
+            username: "mikechen",
+            initials: "MC"
+          },
+          content: "@sarahjohnson agreed. The compact action row works well here.",
+          createdAt: "2026-05-02T08:24:00.000Z",
+          isOwn: true,
+          likes: 3,
+          dislikes: 0
+        }
+      ]}
+    />
+  </div>
+</Preview>
+
+## Installation
+
+```npm
+npx shadcn@latest add @grenish/comment
+```
+
+<Callout type="info">
+  This requires the `@grenish` registry in your `components.json`. See the [installation guide](/docs/installation) for setup.
+</Callout>
+
+### Manual Dependencies
+
+If you prefer manual installation, add the base components:
+
+```npm
+npx shadcn@latest add avatar button dropdown-menu textarea
+npm install lucide-react
+```
+
+## Usage
+
+<Tabs items={['Usage', 'Code']}>
+<Tab value="Usage">
+
+```tsx
+import Comment, { type CommentData } from "@/components/tools/comment"
+
+const comment: CommentData = {
+  id: "1",
+  author: {
+    name: "Sarah Johnson",
+    username: "sarahjohnson",
+    initials: "SJ",
+  },
+  content: "This is a great implementation. @mikechen nice work.",
+  createdAt: new Date(),
+  likes: 12,
+  dislikes: 1,
+}
+
+export default function CommentDemo() {
+  return (
+    <Comment
+      {...comment}
+      onLike={(id) => console.log("like", id)}
+      onDislike={(id) => console.log("dislike", id)}
+      onEdit={(id, content) => console.log("edit", id, content)}
+      onDelete={(id) => console.log("delete", id)}
+      onReport={(id) => console.log("report", id)}
+      onReply={(id, content) => console.log("reply", id, content)}
+    />
+  )
+}
+```
+
+</Tab>
+<Tab value="Code">
+
+```tsx
+"use client";
+
+import { useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Textarea } from "@/components/ui/textarea";
+import { ThumbsUp, ThumbsDown, MoreHorizontal, Reply } from "lucide-react";
+
+export interface CommentAuthor {
+  name: string;
+  username: string;
+  avatarSrc?: string;
+  initials?: string;
+}
+
+export interface CommentData {
+  id: string;
+  author: CommentAuthor;
+  content: string;
+  createdAt: Date | string;
+  isOwn?: boolean;
+  likes?: number;
+  dislikes?: number;
+  replies?: CommentData[];
+}
+
+export interface CommentProps extends CommentData {
+  onLike?: (id: string) => void;
+  onDislike?: (id: string) => void;
+  onEdit?: (id: string, newContent: string) => void;
+  onDelete?: (id: string) => void;
+  onReport?: (id: string) => void;
+  onReply?: (id: string, content: string) => void;
+  depth?: number;
+}
+
+export default function Comment(props: CommentProps) {
+  const [vote, setVote] = useState<"like" | "dislike" | null>(null);
+  const [editing, setEditing] = useState(false);
+  const [replying, setReplying] = useState(false);
+
+  return (
+    <div className="flex gap-3">
+      <Avatar>
+        <AvatarImage src={props.author.avatarSrc} />
+        <AvatarFallback>{props.author.initials}</AvatarFallback>
+      </Avatar>
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center justify-between gap-2">
+          <div>
+            <p className="text-sm font-medium">{props.author.name}</p>
+            <p className="text-xs text-muted-foreground">@{props.author.username}</p>
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <MoreHorizontal />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => setEditing(true)}>Edit</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+        <p className="mt-2 text-sm">{props.content}</p>
+        <div className="mt-2 flex items-center gap-2">
+          <button onClick={() => setVote("like")}><ThumbsUp /></button>
+          <button onClick={() => setVote("dislike")}><ThumbsDown /></button>
+          <button onClick={() => setReplying(true)}><Reply /> Reply</button>
+        </div>
+        {replying && <Textarea placeholder={`Reply to ${props.author.name}...`} />}
+      </div>
+    </div>
+  );
+}
+```
+
+</Tab>
+</Tabs>
+
+## Props
+
+<TypeTable
+  type={{
+    id: {
+      type: "string",
+      default: "undefined",
+      description: "Unique comment identifier passed to action callbacks."
+    },
+    author: {
+      type: "CommentAuthor",
+      default: "undefined",
+      description: "Author display data including name, username, avatar source, and initials fallback."
+    },
+    content: {
+      type: "string",
+      default: "undefined",
+      description: "Comment body. @mentions are highlighted automatically."
+    },
+    createdAt: {
+      type: "Date | string",
+      default: "undefined",
+      description: "Timestamp used for the relative time label."
+    },
+    isOwn: {
+      type: "boolean",
+      default: "false",
+      description: "Switches the overflow menu between edit/delete and report actions."
+    },
+    likes: {
+      type: "number",
+      default: "0",
+      description: "Initial like count."
+    },
+    dislikes: {
+      type: "number",
+      default: "0",
+      description: "Initial dislike count."
+    },
+    replies: {
+      type: "CommentData[]",
+      default: "[]",
+      description: "Nested replies rendered recursively."
+    },
+    depth: {
+      type: "number",
+      default: "0",
+      description: "Current nesting depth. Reply controls stop at depth 3."
+    },
+    onLike: {
+      type: "(id: string) => void",
+      default: "undefined",
+      description: "Called when the like button is clicked."
+    },
+    onDislike: {
+      type: "(id: string) => void",
+      default: "undefined",
+      description: "Called when the dislike button is clicked."
+    },
+    onEdit: {
+      type: "(id: string, newContent: string) => void",
+      default: "undefined",
+      description: "Called when edited content is saved."
+    },
+    onDelete: {
+      type: "(id: string) => void",
+      default: "undefined",
+      description: "Called from the delete menu item for own comments."
+    },
+    onReport: {
+      type: "(id: string) => void",
+      default: "undefined",
+      description: "Called from the report menu item for other users' comments."
+    },
+    onReply: {
+      type: "(id: string, content: string) => void",
+      default: "undefined",
+      description: "Called when a reply is submitted."
+    }
+  }}
+/>
+
+## Examples
+
+### Own Comment
+
+<Preview className="min-h-0">
+  <div className="w-full max-w-xl rounded-lg border bg-background p-5">
+    <Comment
+      id="own-comment"
+      author={{
+        name: "Grace Rivera",
+        username: "grace",
+        initials: "GR"
+      }}
+      content="I can edit or delete this comment because it belongs to the current user."
+      createdAt="2026-05-02T08:32:00.000Z"
+      isOwn={true}
+      likes={8}
+    />
+  </div>
+</Preview>
+
+```tsx
+<Comment
+  id="own-comment"
+  author={{ name: "Grace Rivera", username: "grace", initials: "GR" }}
+  content="I can edit or delete this comment."
+  createdAt={new Date()}
+  isOwn
+/>
+```
+
+### Threaded Replies
+
+<Preview className="min-h-0">
+  <div className="w-full max-w-2xl rounded-lg border bg-background p-5">
+    <Comment
+      id="thread"
+      author={{ name: "Ava Patel", username: "ava", initials: "AP" }}
+      content="Does this support deeper reply threads?"
+      createdAt="2026-05-02T08:12:00.000Z"
+      replies={[
+        {
+          id: "thread-1",
+          author: { name: "Noah Kim", username: "noah", initials: "NK" },
+          content: "Yes. Replies render recursively and indentation stops after a few levels.",
+          createdAt: "2026-05-02T08:16:00.000Z",
+          likes: 5
+        },
+        {
+          id: "thread-2",
+          author: { name: "Lina Moore", username: "lina", initials: "LM" },
+          content: "@noah that keeps long discussions readable.",
+          createdAt: "2026-05-02T08:18:00.000Z",
+          likes: 2
+        }
+      ]}
+    />
+  </div>
+</Preview>
+
+```tsx
+<Comment
+  {...comment}
+  replies={[
+    {
+      id: "reply-1",
+      author: { name: "Noah Kim", username: "noah", initials: "NK" },
+      content: "Replies render recursively.",
+      createdAt: new Date(),
+    },
+  ]}
+/>
+```
+
+## Features
+
+- Recursive threaded replies with a visual thread line
+- Like and dislike buttons with local optimistic counts
+- Inline editing with save and cancel actions
+- Reply composer with keyboard submit support
+- Ownership-aware overflow menu
+- Automatic @mention highlighting

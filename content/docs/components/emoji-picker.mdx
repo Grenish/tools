@@ -1,0 +1,227 @@
+---
+title: Emoji Picker
+description: A searchable emoji picker with categories, recent selections, tooltips, and a popover or standalone panel API.
+---
+
+A small emoji picker for message and comment inputs. Use the default export for a popover trigger, or render `EmojiPickerPanel` directly when you need an always-visible picker inside a custom surface.
+
+<Preview className="min-h-0">
+  <div className="flex items-center gap-3 rounded-lg border bg-background p-4">
+    <span className="text-sm text-muted-foreground">Pick an emoji</span>
+    <EmojiPicker />
+  </div>
+</Preview>
+
+## Installation
+
+```npm
+npx shadcn@latest add @grenish/emoji-picker
+```
+
+<Callout type="info">
+  This requires the `@grenish` registry in your `components.json`. See the [installation guide](/docs/installation) for setup.
+</Callout>
+
+### Manual Dependencies
+
+If you prefer manual installation, add the base components:
+
+```npm
+npx shadcn@latest add button input popover scroll-area tooltip
+npm install lucide-react
+```
+
+## Usage
+
+<Tabs items={['Usage', 'Code']}>
+<Tab value="Usage">
+
+```tsx
+import EmojiPicker, { EmojiPickerPanel } from "@/components/tools/emoji-picker"
+
+export default function EmojiDemo() {
+  return (
+    <EmojiPicker
+      side="top"
+      align="start"
+      onEmojiSelect={(emoji) => console.log(emoji)}
+    />
+  )
+}
+```
+
+</Tab>
+<Tab value="Code">
+
+```tsx
+"use client";
+
+import { useMemo, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Smile, Search } from "lucide-react";
+
+type EmojiEntry = { e: string; n: string };
+
+const EMOJIS: EmojiEntry[] = [
+  { e: "😀", n: "grinning face" },
+  { e: "😂", n: "face with tears of joy" },
+  { e: "😍", n: "smiling face with heart-eyes" },
+  { e: "🎉", n: "party popper" },
+  { e: "🔥", n: "fire" },
+];
+
+export function EmojiPickerPanel({
+  onEmojiSelect,
+}: {
+  onEmojiSelect?: (emoji: string) => void;
+}) {
+  const [query, setQuery] = useState("");
+  const results = useMemo(
+    () => EMOJIS.filter((emoji) => emoji.n.includes(query.toLowerCase())),
+    [query],
+  );
+
+  return (
+    <div className="w-80 overflow-hidden">
+      <div className="border-b p-2">
+        <div className="relative">
+          <Search className="absolute left-2 top-1/2 size-4 -translate-y-1/2" />
+          <Input value={query} onChange={(event) => setQuery(event.target.value)} />
+        </div>
+      </div>
+      <ScrollArea className="h-64">
+        <div className="grid grid-cols-8 gap-1 p-2">
+          {results.map((emoji) => (
+            <button key={emoji.e} onClick={() => onEmojiSelect?.(emoji.e)}>
+              {emoji.e}
+            </button>
+          ))}
+        </div>
+      </ScrollArea>
+    </div>
+  );
+}
+
+export default function EmojiPicker({
+  onEmojiSelect,
+}: {
+  onEmojiSelect?: (emoji: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button variant="ghost" size="icon">
+          <Smile />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0">
+        <EmojiPickerPanel
+          onEmojiSelect={(emoji) => {
+            onEmojiSelect?.(emoji);
+            setOpen(false);
+          }}
+        />
+      </PopoverContent>
+    </Popover>
+  );
+}
+```
+
+</Tab>
+</Tabs>
+
+## Props
+
+### EmojiPicker
+
+<TypeTable
+  type={{
+    onEmojiSelect: {
+      type: "(emoji: string) => void",
+      default: "undefined",
+      description: "Called when the user selects an emoji."
+    },
+    trigger: {
+      type: "React.ReactNode",
+      default: "Default smile icon button",
+      description: "Custom popover trigger rendered with `asChild`."
+    },
+    align: {
+      type: '"start" | "center" | "end"',
+      default: '"start"',
+      description: "Popover alignment."
+    },
+    side: {
+      type: '"top" | "bottom" | "left" | "right"',
+      default: '"top"',
+      description: "Preferred popover side."
+    }
+  }}
+/>
+
+### EmojiPickerPanel
+
+<TypeTable
+  type={{
+    onEmojiSelect: {
+      type: "(emoji: string) => void",
+      default: "undefined",
+      description: "Called when an emoji is selected."
+    },
+    onAfterSelect: {
+      type: "() => void",
+      default: "undefined",
+      description: "Optional callback fired after selection. The popover wrapper uses it to close."
+    },
+    autoFocus: {
+      type: "boolean",
+      default: "false",
+      description: "Focuses the search input when the panel opens."
+    },
+    className: {
+      type: "string",
+      default: "undefined",
+      description: "Additional classes for the panel wrapper."
+    }
+  }}
+/>
+
+## Examples
+
+### Popover Picker
+
+<Preview className="min-h-0">
+  <EmojiPicker side="bottom" align="center" />
+</Preview>
+
+```tsx
+<EmojiPicker side="bottom" align="center" />
+```
+
+### Standalone Panel
+
+<Preview>
+  <div className="overflow-hidden rounded-lg border bg-popover shadow-sm">
+    <EmojiPickerPanel />
+  </div>
+</Preview>
+
+```tsx
+<div className="overflow-hidden rounded-lg border bg-popover shadow-sm">
+  <EmojiPickerPanel />
+</div>
+```
+
+## Features
+
+- Searchable emoji list
+- Category navigation with lucide icons
+- Recently used emoji saved to `localStorage`
+- Tooltip labels for individual emoji
+- Popover and standalone panel APIs
+- Select callback for inserting emoji into custom inputs

@@ -1,8 +1,12 @@
 {
   "pages": [
     "index",
+    "comment",
+    "comment-box",
+    "darkmode-button",
     "delete-button",
     "editor",
+    "emoji-picker",
     "google-button",
     "horizontal-stripes",
     "instagram-card",

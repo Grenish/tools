@@ -17,6 +17,10 @@ import SignupForm from "./tools/blocks/signup-form";
 import ResetPassword from "./tools/blocks/reset-password";
 import SigninForm from "./tools/blocks/signin-form";
 import XButton from "./tools/x-button";
+import DarkModeButton from "./tools/darkmode-buttons/darkmode-button-1";
+import Comment from "./tools/comment";
+import CommentBox from "./tools/comment-box";
+import EmojiPicker, { EmojiPickerPanel } from "./tools/emoji-picker";
 import * as TabsComponents from "fumadocs-ui/components/tabs";
 import { TypeTable } from "./type-table";
 import { File, Folder, Files } from "fumadocs-ui/components/files";
@@ -44,6 +48,11 @@ export function getMDXComponents(components?: MDXComponents) {
     ResetPassword,
     SigninForm,
     XButton,
+    DarkModeButton,
+    Comment,
+    CommentBox,
+    EmojiPicker,
+    EmojiPickerPanel,
     TypeTable,
     File,
     Folder,

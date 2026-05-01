@@ -3,7 +3,7 @@ title: Components
 description: A collection of beautiful, accessible, and installable components.
 ---
 
-Browse the available components below. All components are installable via the `@grenish` shadcn registry — see the [installation guide](/docs/installation) for one-time setup.
+Browse the available components below. All components are installable via the `@grenish` shadcn registry. See the [installation guide](/docs/installation) for one-time setup.
 
 ## Quick Install
 
@@ -16,13 +16,19 @@ npx shadcn@latest add @grenish/<component-name>
 Individual, reusable UI components that can be composed into larger interfaces.
 
 <Cards>
-  <Card title="Google Button" href="/docs/components/google-button" />
-  <Card title="X Button" href="/docs/components/x-button" />
+  <Card title="Comment" href="/docs/components/comment" />
+  <Card title="Comment Box" href="/docs/components/comment-box" />
+  <Card title="Dark Mode Button" href="/docs/components/darkmode-button" />
   <Card title="Delete Button" href="/docs/components/delete-button" />
-  <Card title="View Password" href="/docs/components/view-password-button" />
-  <Card title="Tweet Card" href="/docs/components/tweet-card" />
-  <Card title="Instagram Card" href="/docs/components/instagram-card" />
   <Card title="Editor" href="/docs/components/editor" />
+  <Card title="Emoji Picker" href="/docs/components/emoji-picker" />
+  <Card title="Google Button" href="/docs/components/google-button" />
+  <Card title="Horizontal Stripes" href="/docs/components/horizontal-stripes" />
+  <Card title="Instagram Card" href="/docs/components/instagram-card" />
+  <Card title="Tweet Card" href="/docs/components/tweet-card" />
+  <Card title="Vertical Stripes" href="/docs/components/vertical-stripes" />
+  <Card title="View Password Button" href="/docs/components/view-password-button" />
+  <Card title="X Button" href="/docs/components/x-button" />
 </Cards>
 
 ## Blocks
@@ -37,19 +43,21 @@ Complete, multi-component compositions that form full page sections or flows.
 
 ## Anatomy
 
-Components are built using Tailwind CSS for styling and React for functionality. They are designed to be accessible and customizable. Each component ships as a self-contained file (or set of files for blocks) that gets placed in your project's component directory.
+Components are built with Tailwind CSS and React. Each component ships as a self-contained file, or a small set of files when the component needs supporting pieces.
 
-```tsx title="Example: Using a registry component"
+```tsx title="Example: Using registry components"
+import CommentBox from "@/components/tools/comment-box"
 import { GoogleButton } from "@/components/tools/google-button"
 import TweetCard from "@/components/tools/tweet-card"
 
 export default function Demo() {
   return (
     <div className="space-y-4">
-      <GoogleButton onClick={() => handleAuth()} />
+      <GoogleButton />
+      <CommentBox placeholder="Share your update..." />
       <TweetCard
         profileName="Grenish Rai"
-        tweet="Just shipped an amazing new feature! 🚀"
+        tweet="Just shipped a polished component."
         likes={2000}
       />
     </div>

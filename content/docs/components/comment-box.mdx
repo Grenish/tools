@@ -1,0 +1,205 @@
+---
+title: Comment Box
+description: A rich comment composer with markdown shortcuts, emoji insertion, character limits, and keyboard submit support.
+---
+
+A compact comment composer for discussion forms. It includes avatar context, formatting shortcuts, link and mention helpers, emoji insertion, a 1000 character limit, and submit/cancel actions that collapse until the field is active.
+
+<Preview className="min-h-0">
+  <CommentBox
+    avatarFallback="GR"
+    placeholder="Share your feedback..."
+  />
+</Preview>
+
+## Installation
+
+```npm
+npx shadcn@latest add @grenish/comment-box
+```
+
+<Callout type="info">
+  This requires the `@grenish` registry in your `components.json`. See the [installation guide](/docs/installation) for setup.
+</Callout>
+
+### Manual Dependencies
+
+If you prefer manual installation, add the base components:
+
+```npm
+npx shadcn@latest add avatar button popover scroll-area textarea tooltip input
+npm install lucide-react
+```
+
+## Usage
+
+<Tabs items={['Usage', 'Code']}>
+<Tab value="Usage">
+
+```tsx
+import CommentBox from "@/components/tools/comment-box"
+
+export default function CommentForm() {
+  return (
+    <CommentBox
+      avatarFallback="GR"
+      placeholder="Leave a comment..."
+      onSubmit={(value) => console.log(value)}
+      onCancel={() => console.log("cancel")}
+    />
+  )
+}
+```
+
+</Tab>
+<Tab value="Code">
+
+```tsx
+"use client";
+
+import { useRef, useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Bold, Italic, Code, Link, AtSign } from "lucide-react";
+import EmojiPicker from "./emoji-picker";
+
+const MAX_CHARS = 1000;
+
+interface CommentBoxProps {
+  avatarSrc?: string;
+  avatarFallback?: string;
+  placeholder?: string;
+  onSubmit?: (value: string) => void;
+  onCancel?: () => void;
+}
+
+export default function CommentBox({
+  avatarSrc,
+  avatarFallback = "GR",
+  placeholder = "Leave a comment...",
+  onSubmit,
+  onCancel,
+}: CommentBoxProps) {
+  const [value, setValue] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const remaining = MAX_CHARS - value.length;
+  const isEmpty = value.trim().length === 0;
+  const isOverLimit = remaining < 0;
+
+  const handleSubmit = () => {
+    if (isEmpty || isOverLimit) return;
+    onSubmit?.(value);
+    setValue("");
+  };
+
+  return (
+    <div className="flex w-full max-w-2xl gap-3">
+      <Avatar>
+        <AvatarImage src={avatarSrc} />
+        <AvatarFallback>{avatarFallback}</AvatarFallback>
+      </Avatar>
+      <div className="flex flex-1 flex-col gap-2">
+        <Textarea
+          ref={textareaRef}
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+          placeholder={placeholder}
+          onKeyDown={(event) => {
+            if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+              event.preventDefault();
+              handleSubmit();
+            }
+          }}
+        />
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1">
+            <button type="button"><Bold /></button>
+            <button type="button"><Italic /></button>
+            <button type="button"><Code /></button>
+            <button type="button"><Link /></button>
+            <button type="button"><AtSign /></button>
+            <EmojiPicker onEmojiSelect={(emoji) => setValue((v) => v + emoji)} />
+          </div>
+          <div className="flex items-center gap-2">
+            <span>{remaining}</span>
+            <Button variant="ghost" onClick={onCancel}>Cancel</Button>
+            <Button disabled={isEmpty || isOverLimit} onClick={handleSubmit}>
+              Comment
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+</Tab>
+</Tabs>
+
+## Props
+
+<TypeTable
+  type={{
+    avatarSrc: {
+      type: "string",
+      default: "undefined",
+      description: "Optional image URL for the user avatar."
+    },
+    avatarFallback: {
+      type: "string",
+      default: '"GR"',
+      description: "Fallback text shown when no avatar image is available."
+    },
+    placeholder: {
+      type: "string",
+      default: '"Leave a comment..."',
+      description: "Textarea placeholder text."
+    },
+    onSubmit: {
+      type: "(value: string) => void",
+      default: "undefined",
+      description: "Called with the comment value when the user submits."
+    },
+    onCancel: {
+      type: "() => void",
+      default: "undefined",
+      description: "Called when the cancel action is clicked."
+    }
+  }}
+/>
+
+## Examples
+
+### Default Composer
+
+<Preview className="min-h-0">
+  <CommentBox />
+</Preview>
+
+```tsx
+<CommentBox />
+```
+
+### Custom Placeholder
+
+<Preview className="min-h-0">
+  <CommentBox avatarFallback="AP" placeholder="Ask a follow-up question..." />
+</Preview>
+
+```tsx
+<CommentBox
+  avatarFallback="AP"
+  placeholder="Ask a follow-up question..."
+/>
+```
+
+## Features
+
+- Markdown helpers for bold, italic, inline code, links, and mentions
+- Emoji picker integration with cursor-aware insertion
+- Character counter with warning and over-limit states
+- `Cmd/Ctrl + Enter` submit shortcut
+- Collapsible footer actions while idle
+- Avatar image and fallback support
