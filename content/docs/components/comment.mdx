@@ -1,9 +1,9 @@
 ---
 title: Comment
-description: A threaded comment component with voting, replies, editing, deletion, reporting, and mention highlighting.
+description: A threaded comment component with variants, sizing, voting, replies, editing, deletion, reporting, and mention highlighting.
 ---
 
-A threaded comment component for discussion interfaces. It renders author metadata, relative timestamps, like and dislike actions, inline editing, reply boxes, collapsible nested replies, and ownership-aware menus.
+A threaded comment component for discussion interfaces. It renders author metadata, relative timestamps, like and dislike actions, inline editing, reply boxes, collapsible nested replies, ownership-aware menus, and multiple density and visual variants.
 
 <Preview className="min-h-0">
   <div className="w-full max-w-2xl rounded-lg border bg-background p-5">
@@ -52,7 +52,7 @@ npx shadcn@latest add @grenish/comment
 If you prefer manual installation, add the base components:
 
 ```npm
-npx shadcn@latest add avatar button dropdown-menu textarea
+npx shadcn@latest add avatar badge button dropdown-menu textarea
 npm install lucide-react
 ```
 
@@ -81,6 +81,8 @@ export default function CommentDemo() {
   return (
     <Comment
       {...comment}
+      variant="default"
+      size="md"
       onLike={(id) => console.log("like", id)}
       onDislike={(id) => console.log("dislike", id)}
       onEdit={(id, content) => console.log("edit", id, content)}
@@ -124,6 +126,8 @@ export interface CommentData {
 }
 
 export interface CommentProps extends CommentData {
+  variant?: "default" | "compact" | "minimal" | "bubble";
+  size?: "sm" | "md" | "lg";
   onLike?: (id: string) => void;
   onDislike?: (id: string) => void;
   onEdit?: (id: string, newContent: string) => void;
@@ -131,6 +135,7 @@ export interface CommentProps extends CommentData {
   onReport?: (id: string) => void;
   onReply?: (id: string, content: string) => void;
   depth?: number;
+  className?: string;
 }
 
 export default function Comment(props: CommentProps) {
@@ -221,6 +226,16 @@ export default function Comment(props: CommentProps) {
       default: "[]",
       description: "Nested replies rendered recursively."
     },
+    variant: {
+      type: '"default" | "compact" | "minimal" | "bubble"',
+      default: '"default"',
+      description: "Controls the comment header and body presentation. Minimal hides the avatar, while bubble wraps the body in a muted rounded bubble."
+    },
+    size: {
+      type: '"sm" | "md" | "lg"',
+      default: '"md"',
+      description: "Controls avatar size, text scale, action size, spacing, and thread indentation."
+    },
     depth: {
       type: "number",
       default: "0",
@@ -255,6 +270,11 @@ export default function Comment(props: CommentProps) {
       type: "(id: string, content: string) => void",
       default: "undefined",
       description: "Called when a reply is submitted."
+    },
+    className: {
+      type: "string",
+      default: "undefined",
+      description: "Additional classes applied to the root comment container."
     }
   }}
 />
@@ -333,6 +353,72 @@ export default function Comment(props: CommentProps) {
 />
 ```
 
+### Variants
+
+<Preview className="min-h-0">
+  <div className="flex w-full max-w-2xl flex-col gap-6 rounded-lg border bg-background p-5">
+    <Comment
+      id="variant-compact"
+      variant="compact"
+      author={{ name: "Sarah Johnson", username: "sarahjohnson", initials: "SJ" }}
+      content="Compact keeps the header to one line for denser threads."
+      createdAt="2026-05-02T08:20:00.000Z"
+      likes={4}
+    />
+    <Comment
+      id="variant-minimal"
+      variant="minimal"
+      author={{ name: "Mike Chen", username: "mikechen", initials: "MC" }}
+      content="Minimal removes the avatar and keeps the actions flat."
+      createdAt="2026-05-02T08:24:00.000Z"
+      dislikes={1}
+    />
+    <Comment
+      id="variant-bubble"
+      variant="bubble"
+      author={{ name: "Grace Rivera", username: "grace", initials: "GR" }}
+      content="Bubble places the comment body inside a soft rounded surface."
+      createdAt="2026-05-02T08:28:00.000Z"
+      isOwn
+      likes={8}
+    />
+  </div>
+</Preview>
+
+```tsx
+<Comment variant="compact" {...comment} />
+<Comment variant="minimal" {...comment} />
+<Comment variant="bubble" {...comment} />
+```
+
+### Sizes
+
+<Preview className="min-h-0">
+  <div className="flex w-full max-w-2xl flex-col gap-5 rounded-lg border bg-background p-5">
+    <Comment
+      id="size-sm"
+      size="sm"
+      author={{ name: "Ava Patel", username: "ava", initials: "AP" }}
+      content="Small works well for sidebars and deeply nested replies."
+      createdAt="2026-05-02T08:12:00.000Z"
+      likes={2}
+    />
+    <Comment
+      id="size-lg"
+      size="lg"
+      author={{ name: "Noah Kim", username: "noah", initials: "NK" }}
+      content="Large gives primary discussion areas more breathing room."
+      createdAt="2026-05-02T08:16:00.000Z"
+      likes={5}
+    />
+  </div>
+</Preview>
+
+```tsx
+<Comment size="sm" {...comment} />
+<Comment size="lg" {...comment} />
+```
+
 ## Features
 
 - Recursive threaded replies with a visual thread line
@@ -341,3 +427,5 @@ export default function Comment(props: CommentProps) {
 - Reply composer with keyboard submit support
 - Ownership-aware overflow menu
 - Automatic @mention highlighting
+- `default`, `compact`, `minimal`, and `bubble` variants
+- `sm`, `md`, and `lg` sizes

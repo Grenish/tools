@@ -96,8 +96,8 @@ export default function Signup() {
           <FieldGroup>
             <Field orientation={"horizontal"}>
               <FieldLabel>Or continue with</FieldLabel>
-              <GoogleButton />
-              <XButton />
+              <GoogleButton size="icon" />
+              <XButton size="icon" />
             </Field>
           </FieldGroup>
         </FieldSet>

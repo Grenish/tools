@@ -2,6 +2,8 @@
 
 import Comment, { type CommentData } from "@/components/tools/comment";
 import DarkModeButton1 from "@/components/tools/darkmode-buttons/darkmode-button-1";
+import LikeButton from "@/components/tools/like-button";
+import { Flame, Heart, ThumbsUp } from "lucide-react";
 
 const sampleComments: CommentData[] = [
   {
@@ -83,7 +85,54 @@ export default function Test() {
               onReply={(id, content) => console.log("Reply:", id, content)}
             />
           ))}*/}
-          <DarkModeButton1 />
+          {/*<DarkModeButton1 />*/}
+          <LikeButton count={24} iconType="love" ambience size="icon-sm" />
+          <LikeButton
+            type="reaction"
+            reactions={[
+              {
+                id: "like",
+                icon: <ThumbsUp size={15} />,
+                label: "Like",
+                color: "#3b82f6",
+              },
+              {
+                id: "love",
+                icon: <Heart size={15} />,
+                label: "Love",
+                color: "#f43f5e",
+              },
+              {
+                id: "fire",
+                icon: <Flame size={15} />,
+                label: "Fire",
+                color: "#f97316",
+              },
+            ]}
+            onReactionChange={(id) => console.log(id)}
+            ambience
+          />
+          <LikeButton
+            type="big"
+            variant="soft"
+            reactions={[
+              {
+                id: "like",
+                icon: "👍",
+                label: "Like",
+                count: 12,
+                color: "#3b82f6",
+              },
+              {
+                id: "love",
+                icon: "❤️",
+                label: "Love",
+                count: 5,
+                color: "#f43f5e",
+              },
+            ]}
+            ambience
+          />
         </div>
       </div>
     </div>

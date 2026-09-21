@@ -52,7 +52,7 @@ export default function Signin() {
               <ViewPasswordButton inputId="password" />
             </InputGroup>
             <FieldDescription>
-              <Link href={"/forget-password"}>Forget Password?</Link>
+              <Link href={""}>Forget Password?</Link>
             </FieldDescription>
           </Field>
         </FieldGroup>
@@ -71,8 +71,8 @@ export default function Signin() {
           <FieldGroup>
             <Field orientation={"horizontal"}>
               <FieldLabel>Or continue with</FieldLabel>
-              <GoogleButton />
-              <XButton />
+              <GoogleButton size="icon" />
+              <XButton size="icon" />
             </Field>
           </FieldGroup>
         </FieldSet>
