@@ -1,69 +1,36 @@
-# Tools
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Beautifully crafted, accessible UI components and blocks built on top of [shadcn/ui](https://ui.shadcn.com). Installable via the shadcn CLI through the `@grenish` registry.
+## Getting Started
 
-## Quick Start
-
-Add the registry to your `components.json`:
-
-```json
-{
-  "registries": {
-    "@grenish": {
-      "url": "https://tools-grenish.vercel.app/r"
-    }
-  }
-}
-```
-
-Install any component:
+First, run the development server:
 
 ```bash
-npx shadcn@latest add @grenish/tweet-card
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## Components
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-| Component            | Description                                                                                |
-| -------------------- | ------------------------------------------------------------------------------------------ |
-| `tweet-card`         | A responsive tweet/X post card with multi-size support, media grids, and engagement stats. |
-| `instagram-card`     | An Instagram-style post card with photo grid layouts and profile info.                     |
-| `google-button`      | A Google sign-in button with icon-only and full-text variants.                             |
-| `x-button`           | An X (Twitter) sign-in button with icon-only and full-text variants.                       |
-| `delete-button`      | A destructive action button with a built-in confirmation dialog.                           |
-| `view-password`      | A password input with an inline visibility toggle.                                         |
-| `horizontal-stripes` | A decorative horizontal stripe pattern using CSS repeating gradients.                      |
-| `vertical-stripes`   | A decorative vertical stripe pattern using CSS repeating gradients.                        |
-| `editor`             | A rich text editor with formatting toolbar, font selector, and preview mode.               |
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Blocks
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-| Block            | Description                                                      |
-| ---------------- | ---------------------------------------------------------------- |
-| `signin-form`    | A sign-in form with social login and password recovery.          |
-| `signup-form`    | A registration form with email, password, and social auth.       |
-| `reset-password` | A password reset flow with new password and confirmation fields. |
+## Learn More
 
-### Project Structure
+To learn more about Next.js, take a look at the following resources:
 
-```
-├── app/
-│   ├── (home)/          Landing page
-│   └── docs/            Documentation layout and pages
-├── components/
-│   ├── tools/           Source components used in docs previews
-│   └── ui/              shadcn/ui base components
-├── content/docs/        MDX documentation files
-├── registry/
-│   └── new-york/        Registry source files (self-contained)
-├── public/r/            Generated registry JSON artifacts
-└── registry.json        Registry manifest
-```
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## Documentation
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-Visit [tools-grenish.vercel.app](https://tools-grenish.vercel.app) for full documentation, live previews, and usage examples.
+## Deploy on Vercel
 
-## License
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Open source.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

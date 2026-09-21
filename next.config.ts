@@ -1,15 +1,7 @@
 import type { NextConfig } from "next";
-import { createMDX } from "fumadocs-mdx/next";
-import path from "path";
-const withMDX = createMDX();
 
-const config: NextConfig = {
-  output: "export",
-  images: { unoptimized: true },
-  reactStrictMode: true,
-  turbopack: {
-    root: path.dirname(__dirname),
-  },
+const nextConfig: NextConfig = {
+  /* config options here */
 };
 
-export default withMDX(config);
+export default nextConfig;
